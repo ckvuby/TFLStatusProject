@@ -1,4 +1,5 @@
 ﻿using System;
+using TFLStatusLibrary;
 
 namespace TFLStatus
 {
@@ -6,7 +7,8 @@ namespace TFLStatus
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TFLApiClient tflApiClient = new TFLApiClient();
+            tflApiClient.ApiCall();
         }
     }
 }
