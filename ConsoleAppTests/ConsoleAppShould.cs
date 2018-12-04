@@ -19,6 +19,21 @@ namespace ConsoleAppTests
                 Assert.Equal(expected, sw.ToString());
             }
         }
+
+        [Fact]
+
+        public void DisplayOptionForAllLineStatus()
+        {
+            using (StringWriter sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+                ConsoleApp.DisplayAllLines();
+                string expected = string.Format("[1] - Status of all tube lines{0}", Environment.NewLine);
+              
+                Assert.Equal(expected, sw.ToString());
+            }
+        }
+
     }
     
 }
