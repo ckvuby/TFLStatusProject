@@ -12,9 +12,10 @@ namespace ConsoleAppTests
         {
             using (StringWriter sw = new StringWriter())
             {
+                var consoleApp = new ConsoleApp();
                 Console.SetOut(sw);
-                ConsoleApp.Greeter();
-                string expected = string.Format("Welcome to TFL Status update{0}", Environment.NewLine);
+                consoleApp.Greeter();
+                string expected = string.Format("Welcome to TFL Status update \nPlease pick an option from be{0}", Environment.NewLine);
 
                 Assert.Equal(expected, sw.ToString());
             }
@@ -26,8 +27,9 @@ namespace ConsoleAppTests
         {
             using (StringWriter sw = new StringWriter())
             {
+                var consoleApp = new ConsoleApp();
                 Console.SetOut(sw);
-                ConsoleApp.DisplayAllLines();
+                consoleApp.DisplayAllLines();
                 string expected = string.Format("[1] - Status of all tube lines{0}", Environment.NewLine);
               
                 Assert.Equal(expected, sw.ToString());

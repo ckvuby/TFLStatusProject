@@ -2,20 +2,21 @@
 
 namespace TFLStatus
 {
-    public class ConsoleApp
+    public class ConsoleApp : IConsoleApp
     {
         static void Main(string[] args)
         {
-            Greeter();
-            DisplayAllLines();
+            var consoleapp = new ConsoleApp();
+            consoleapp.Greeter();
+            consoleapp.DisplayAllLines();
         }
 
-        public static void Greeter()
+        public void Greeter()
         {
-            Console.WriteLine("Welcome to TFL Status update \nPlease pick an option from below");
+            Console.WriteLine("Welcome to TFL Status update \nPlease pick an option from be");
         }
 
-        public static void DisplayAllLines()
+        public void DisplayAllLines()
         {
             Console.WriteLine("[1] - Status of all tube lines");
         }
