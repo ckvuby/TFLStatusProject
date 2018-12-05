@@ -2,7 +2,7 @@
 
 namespace TFLStatusLibrary
 {
-   public class LineInfo
+   public class LineInformation
     {
         public string lineId { get; set; }
         public string lineName { get; set; }

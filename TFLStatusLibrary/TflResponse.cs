@@ -4,12 +4,8 @@ using System.Text;
 
 namespace TFLStatusLibrary
 {
-    public class TflResponse
-    {
-        //public List<TflLineInfo> LineInfo { get; set; }
-    }
-
-    public class TflLineInfo
+   
+    public class TflApiResponseInformation
     {
         public string id { get; set; }
         public string name { get; set; }
