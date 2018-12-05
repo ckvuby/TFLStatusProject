@@ -4,6 +4,6 @@
     {
         void Greeter();
 
-        void DisplayAllLines();
+        void DisplayOptions();
     }
 }
