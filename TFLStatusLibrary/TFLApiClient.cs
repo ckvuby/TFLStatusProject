@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TFLStatusLibrary
 {
-    public class TFLApiClient
+    public class TFLApiClient : ITFLAPIClient 
     {
         HttpClient client = new HttpClient();
         private string apiRequestUrl = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
@@ -17,7 +17,7 @@ namespace TFLStatusLibrary
             setHeaders("application/json");
             try
             {
-                var response = makeTFLApiCall().Result;
+                var response = MakeTFLApiCall().Result;
                 if (response.IsSuccessStatusCode) 
                 {
                     var responseString = ConvertResponseToString(response).Result;
@@ -79,7 +79,7 @@ namespace TFLStatusLibrary
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(mediatypevalue));
         }
 
-        public async Task<HttpResponseMessage> makeTFLApiCall()
+        public async Task<HttpResponseMessage> MakeTFLApiCall()
         {
             HttpResponseMessage response = await client.GetAsync(apiRequestUrl);
             return response;
@@ -91,5 +91,7 @@ namespace TFLStatusLibrary
             jsonString = await response.Content.ReadAsStringAsync();
             return jsonString;
         }
+
+        
     }
 }
