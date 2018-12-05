@@ -8,7 +8,6 @@ namespace TFLStatus
         static void Main(string[] args)
         {
             TFLApiClient tflApiClient = new TFLApiClient();
-            tflApiClient.ApiCall();
         }
     }
 }

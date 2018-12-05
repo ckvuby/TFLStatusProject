@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,8 +27,9 @@ namespace TFLStatusLibrary
                     var responseJson = GetJsonResponseAsString(response).Result;
                     var lineInfo = GetLineInformation(responseJson);
                     formattedLineInfo = FormatLineInformation(lineInfo);
-                    
-                }     
+                    Console.WriteLine(formattedLineInfo);
+
+                }
             }
             catch (HttpRequestException e)
             {
@@ -44,15 +46,30 @@ namespace TFLStatusLibrary
 
         public List<LineInfo> FormatLineInformation(List<TflLineInfo> lineInfo)
         {
-            var formattedLineInformation = lineInfo.Select(line =>
-            new LineInfo()
+            var formattedLineInformation = new List<LineInfo>();
+
+            foreach (TflLineInfo line in lineInfo)
             {
-                lineId = line.id,
-                lineName = line.name,
-                lineStatus = line.lineStatuses[0].statusSeverityDescription,
-                //statusDescription = line.disruptions[0].description,
-                //statusReason = line.disruptions[0].reason
-            }).ToList();
+                var formattedLine = new LineInfo();
+
+                if (line.disruptions.Length == 0)
+                {
+                    formattedLine.lineId = line.id;
+                    formattedLine.lineName = line.name;
+                    formattedLine.lineStatus = line.lineStatuses[0].statusSeverityDescription;
+                    formattedLine.statusDescription = "";
+                    formattedLine.statusReason = "";
+                }
+                else
+                {
+                    formattedLine.lineId = line.id;
+                    formattedLine.lineName = line.name;
+                    formattedLine.lineStatus = line.lineStatuses[0].statusSeverityDescription;
+                    formattedLine.statusDescription = line.disruptions[0].description;
+                    formattedLine.statusReason = line.disruptions[0].reason;
+                }
+                formattedLineInformation.Add(formattedLine);
+            }
             return formattedLineInformation;
         }
 
