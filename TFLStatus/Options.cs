@@ -5,12 +5,9 @@ using CommandLine;
 
 namespace TFLStatus
 {
-    class Options
+    public class Options
     {
         [Option('a', "all")]
         public bool AllTubeLineStatus { get; set; }
-
-        [Option('v', "victoria")]
-        public bool ShowVictoriaLineStatus { get; set; }
     }
 }
