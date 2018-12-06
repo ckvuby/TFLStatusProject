@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace TFLStatusLibrary
 {
-    
-    
         public class HttpClientWrapper : IHttpClient
         {
             private readonly HttpClient _httpClient;

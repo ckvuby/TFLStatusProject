@@ -12,24 +12,25 @@ namespace TFLStatusLibrary.Tests
     public class TFLApiClientShould
     {
         [Fact]
-        public async Task MakeTFLApiCallAsync()
+        public async Task makeApiCallandReturnHTTPMessageResponseAsync()
         {
-            var fakeResponseHandler = new MockResponseHandler();
-            fakeResponseHandler.AddFakeResponse(new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true"), new HttpResponseMessage(HttpStatusCode.OK));
+            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
 
-            var httpClient = new HttpClient(fakeResponseHandler);
+            var url = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
 
-            var response1 = await httpClient.GetAsync("http://example.org/notthere");
-            var response2 = await httpClient.GetAsync("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("This is the response message")
+            };
 
-            Assert.Equal(response1.StatusCode, HttpStatusCode.NotFound);
-            Assert.Equal(response2.StatusCode, HttpStatusCode.OK);
+            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
 
-        }
+             TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
+            var response2 =   tflClient.MakeTFLApiCall();
 
-        [Fact]
-        public void MapResponseStringToObject()
-        {
+           // var response2 = await httpClient.GetAsync("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+
+            Assert.Equal(responseMessage, response2.Result);
 
         }
     }

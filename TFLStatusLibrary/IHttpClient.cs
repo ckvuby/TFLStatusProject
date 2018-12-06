@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace TFLStatusLibrary
 {
-
-
-
     public interface IHttpClient
     {
         Task<HttpResponseMessage> GetAsync(string requestUri);
