@@ -8,11 +8,10 @@ namespace TFLStatus
 {
     public class ConsoleApp : IConsoleApp
     {
-        public static IMockApiClass MockClass;
+        public IMockApiClass ApiClass;
 
         public ConsoleApp()
         {
-            MockClass = new MockApiClass();
         }
         static void Main(string[] args)
         {
@@ -22,7 +21,7 @@ namespace TFLStatus
                     if (o.AllTubeLineStatus)
                     {
                         var consoleApp = new ConsoleApp();
-                        consoleApp.ShowStatusOfAllTubeLines(o, MockClass);
+                        consoleApp.ShowStatusOfAllTubeLines(o);
                     }else
                     {
                         Console.WriteLine("Sorry no valid parameter");
@@ -32,9 +31,10 @@ namespace TFLStatus
             Console.ReadLine();
         }
 
-        public void ShowStatusOfAllTubeLines(Options options, IMockApiClass apiClass)
+        public void ShowStatusOfAllTubeLines(Options options)
         {
-            var tflStatusData = apiClass.GetDataFromApi();
+            ApiClass = new MockApiClass();
+            var tflStatusData = ApiClass.GetDataFromApi();
 
             foreach (Hashtable lines in tflStatusData)
             {
