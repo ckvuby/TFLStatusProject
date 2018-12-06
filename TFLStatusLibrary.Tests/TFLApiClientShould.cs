@@ -52,26 +52,19 @@ namespace TFLStatusLibrary.Tests
                 Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
                 var url = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
 
-
-                Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>();
-
-
-                responseMessage.SetupProperty(x => x.StatusCode);
-                responseMessage.Object.StatusCode = (HttpStatusCode) 42;
-                
+                Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
 
                 httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage.Object));
 
                 TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
 
                 tflClient.MakeTFLApiCall();
+                var responseObject = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
 
                 string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
-
+                Assert.Null(responseObject);
                 Assert.Equal(expected, sw.ToString());
-
             }
-
         }
     }
 }
