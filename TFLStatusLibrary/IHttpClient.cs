@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace TFLStatusLibrary
 {
@@ -11,6 +12,7 @@ namespace TFLStatusLibrary
         Task<HttpResponseMessage> GetAsync(string requestUri);
         void SetHeaders();
 
+      //  HttpRequestHeaders DefaultRequestHeaders { get; }
     }
 
 }

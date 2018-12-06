@@ -11,6 +11,7 @@ namespace TFLStatus
 
         public void callTfl()
         {
+            httpClient = new HttpClient();
             IHttpClient httpclient = new HttpClientWrapper(httpClient);
             TFLApiClient tflApiClient = new TFLApiClient(httpclient);
             var lines = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
