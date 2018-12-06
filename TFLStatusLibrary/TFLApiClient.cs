@@ -22,7 +22,6 @@ namespace TFLStatusLibrary
         {
             List<LineInformation> formattedLineInfo = null;
             _httpClient.SetHeaders();
-           // SetHeaders();
             try
             {
                 var response = MakeTFLApiCall().Result;
@@ -43,13 +42,7 @@ namespace TFLStatusLibrary
             }
             return formattedLineInfo;
         }
-        /*
-        public void SetHeaders()
-        {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        }
-        */
+
         public List<TflApiResponseInformation> MapResponseStringToObject(string responseString)
         {
             var TflApiResponseInformation  = JsonConvert.DeserializeObject<List<TflApiResponseInformation>>(responseString);

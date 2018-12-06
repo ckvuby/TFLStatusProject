@@ -1,6 +1,7 @@
 using Moq;
 using Moq.Protected;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -11,13 +12,22 @@ namespace TFLStatusLibrary.Tests
 {
     public class TFLApiClientShould
     {
+
         [Fact]
-        public async Task makeApiCallandReturnHTTPMessageResponseAsync()
+        public async void MakeACallToApi()
         {
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-
             var url = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
+            TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
+            await tflClient.MakeTFLApiCall();
+            httpClient.Verify(x => x.GetAsync(url), Times.Once());
+        }
 
+        [Fact]
+        public async Task ReturnHTTPMessageResponseAsync()
+        {
+            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
+            var url = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("This is the response message")
@@ -25,12 +35,42 @@ namespace TFLStatusLibrary.Tests
 
             httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
 
-             TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
-            var response2 =   tflClient.MakeTFLApiCall();
-
-           // var response2 = await httpClient.GetAsync("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
+            var response2 = tflClient.MakeTFLApiCall();
 
             Assert.Equal(responseMessage, response2.Result);
+
+        }
+
+        [Fact]
+        public async Task WriteErrorMessageToConsoleIfUnsuccessfulStatusCode()
+        {
+            using (StringWriter sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+
+                Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
+                var url = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
+
+
+                Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>();
+
+
+                responseMessage.SetupProperty(x => x.StatusCode);
+                responseMessage.Object.StatusCode = (HttpStatusCode) 42;
+                
+
+                httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage.Object));
+
+                TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
+
+                tflClient.MakeTFLApiCall();
+
+                string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
+
+                Assert.Equal(expected, sw.ToString());
+
+            }
 
         }
     }
