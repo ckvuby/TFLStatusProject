@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLStatus", "TFLStatus\TFLStatus.csproj", "{3D661977-2324-4C27-BA18-4FA56C81CC6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatus", "TFLStatus\TFLStatus.csproj", "{3D661977-2324-4C27-BA18-4FA56C81CC6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLStatusLibrary", "TFLStatusLibrary\TFLStatusLibrary.csproj", "{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary", "TFLStatusLibrary\TFLStatusLibrary.csproj", "{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppTests", "ConsoleAppTests\ConsoleAppTests.csproj", "{5145025F-B520-44D0-90F1-489F773C648E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5145025F-B520-44D0-90F1-489F773C648E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5145025F-B520-44D0-90F1-489F773C648E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5145025F-B520-44D0-90F1-489F773C648E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5145025F-B520-44D0-90F1-489F773C648E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
