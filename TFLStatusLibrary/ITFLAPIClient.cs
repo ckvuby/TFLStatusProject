@@ -12,8 +12,7 @@ namespace TFLStatusLibrary
 
         LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line, string statusDescription, string statusReason);
 
-        void setHeaders(string mediatypevalue);
-
+       
         Task<HttpResponseMessage> MakeTFLApiCall();
         Task<string> ConvertResponseToString(HttpResponseMessage response);
     }
