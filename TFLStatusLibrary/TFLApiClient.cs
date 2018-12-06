@@ -36,7 +36,7 @@ namespace TFLStatusLibrary
                     Console.WriteLine("Sorry information is not available");
                 }
             }
-            catch (HttpRequestException e)
+            catch (Exception e)
             {
                 Console.WriteLine("Sorry there was an error");
             }

@@ -43,7 +43,7 @@ namespace TFLStatusLibrary.Tests
         }
 
         [Fact]
-        public async Task WriteErrorMessageToConsoleIfUnsuccessfulStatusCode()
+        public async Task WriteErrorMessageToConsoleIfBadStatusCode()
         {
             using (StringWriter sw = new StringWriter())
             {
@@ -58,7 +58,6 @@ namespace TFLStatusLibrary.Tests
 
                 TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
 
-                tflClient.MakeTFLApiCall();
                 var responseObject = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
 
                 string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
@@ -66,5 +65,27 @@ namespace TFLStatusLibrary.Tests
                 Assert.Equal(expected, sw.ToString());
             }
         }
+
+        [Fact]
+        public async Task ThrowAnExceptionWhenNoResponseFromAPI()
+        {
+            using (StringWriter sw = new StringWriter())
+            {
+             Console.SetOut(sw);
+
+             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
+             var url = "https://fake_uirl_test";
+            
+             httpClient.Setup(x => x.GetAsync(url)).Throws(new Exception());
+
+             TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
+             tflClient.SetupAndMakeApiCallAndReturnFormattedData();
+
+             string expected = string.Format("Sorry there was an error{0}", Environment.NewLine);
+             Assert.Equal(expected, sw.ToString());
+            }
+        }
+
+       
     }
 }
