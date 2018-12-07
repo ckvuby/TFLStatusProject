@@ -15,7 +15,7 @@ namespace TFLStatus
             IHttpClient httpclient = new HttpClientWrapper(httpClient);
             TFLApiClient tflApiClient = new TFLApiClient(httpclient);
             var lines = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
-            lines.ForEach(line => Console.WriteLine(line.lineId + "--" + line.lineName + "--" + line.lineStatus + "___" + line.statusDescription + "---" + line.statusReason));
+            lines.ForEach(line => Console.WriteLine(line.lineId + "--" + line.lineName + "--" + line.lineStatus + "___" + "---" + line.statusReason));
 
         }
         static void Main(string[] args)

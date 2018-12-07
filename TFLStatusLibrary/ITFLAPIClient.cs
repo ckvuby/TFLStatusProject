@@ -10,7 +10,7 @@ namespace TFLStatusLibrary
         List<TflApiResponseInformation> MapResponseStringToObject(string responseString);
         List<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation);
 
-        LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line, string statusDescription, string statusReason);
+        LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line);
 
        
         Task<HttpResponseMessage> MakeTFLApiCall();

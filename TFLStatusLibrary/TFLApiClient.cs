@@ -55,32 +55,21 @@ namespace TFLStatusLibrary
             foreach (TflApiResponseInformation line in TflApiResponseInformation)
             {
                 var formattedLine = new LineInformation();
-                if (line.disruptions.Length == 0)
-                {
-                    formattedLine = setLineInfo(formattedLine, line, "", "");
-                }
-                else
-                {
-                    formattedLine = setLineInfo(formattedLine, line, line.disruptions[0].description, line.disruptions[0].reason);           
-                }
+                formattedLine = setLineInfo(formattedLine, line);
                 formattedLineInformation.Add(formattedLine);
             }
             return formattedLineInformation;
         }
 
-        public LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line, string statusDescription, string statusReason)
+        public LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line)
         {
             
             formattedLine.lineId = line.id;
             formattedLine.lineName = line.name;
             formattedLine.lineStatus = line.lineStatuses[0].statusSeverityDescription;
-            formattedLine.statusDescription = statusDescription;
-            formattedLine.statusReason = statusReason;
+            formattedLine.statusReason = line.lineStatuses[0].reason;
             return formattedLine;
-
         }
-
-        
 
         public async Task<HttpResponseMessage> MakeTFLApiCall()
         {
@@ -95,6 +84,5 @@ namespace TFLStatusLibrary
             return jsonString;
         }
 
-        
     }
 }
