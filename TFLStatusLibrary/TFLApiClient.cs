@@ -1,7 +1,10 @@
 ﻿using Moq;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,11 +21,10 @@ namespace TFLStatusLibrary
 
         private string apiRequestUrl = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
 
-        public List<LineInformation> SetupAndMakeApiCallAndReturnFormattedData()
+        public IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData()
         {
-            List<LineInformation> formattedLineInfo = null;
+            IEnumerable<LineInformation> formattedLineInfo = null;
             _httpClient.SetHeaders();
-           // SetHeaders();
             try
             {
                 var response = MakeTFLApiCall().Result;
@@ -37,57 +39,35 @@ namespace TFLStatusLibrary
                     Console.WriteLine("Sorry information is not available");
                 }
             }
-            catch (HttpRequestException e)
+            catch (Exception e)
             {
                 Console.WriteLine("Sorry there was an error");
             }
             return formattedLineInfo;
         }
-        /*
-        public void SetHeaders()
-        {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        }
-        */
+
         public List<TflApiResponseInformation> MapResponseStringToObject(string responseString)
         {
             var TflApiResponseInformation  = JsonConvert.DeserializeObject<List<TflApiResponseInformation>>(responseString);
             return TflApiResponseInformation;
         }
 
-        public List<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation)
+        public IEnumerable<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation)
         {
-            var formattedLineInformation = new List<LineInformation>();
-            foreach (TflApiResponseInformation line in TflApiResponseInformation)
-            {
-                var formattedLine = new LineInformation();
-                if (line.disruptions.Length == 0)
+          
+            var formattedLineInformation = TflApiResponseInformation.Select(line =>
+                new LineInformation()
                 {
-                    formattedLine = setLineInfo(formattedLine, line, "", "");
-                }
-                else
-                {
-                    formattedLine = setLineInfo(formattedLine, line, line.disruptions[0].description, line.disruptions[0].reason);           
-                }
-                formattedLineInformation.Add(formattedLine);
-            }
+                    lineId = line.id,
+                    lineName = line.name,
+                    lineStatus = line.lineStatuses[0].statusSeverityDescription,
+                    statusReason = line.lineStatuses[0].reason
+                });
+            
             return formattedLineInformation;
         }
 
-        public LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line, string statusDescription, string statusReason)
-        {
-            
-            formattedLine.lineId = line.id;
-            formattedLine.lineName = line.name;
-            formattedLine.lineStatus = line.lineStatuses[0].statusSeverityDescription;
-            formattedLine.statusDescription = statusDescription;
-            formattedLine.statusReason = statusReason;
-            return formattedLine;
-
-        }
-
-        
+       
 
         public async Task<HttpResponseMessage> MakeTFLApiCall()
         {
@@ -102,6 +82,5 @@ namespace TFLStatusLibrary
             return jsonString;
         }
 
-        
     }
 }

@@ -16,15 +16,11 @@ namespace TFLStatusLibrary
                 _httpClient = httpClient;
             }
 
-        //public HttpRequestHeaders DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-      
-        public Task<HttpResponseMessage> GetAsync(string requestUri)
+            public Task<HttpResponseMessage> GetAsync(string requestUri)
             {
                 return _httpClient.GetAsync(requestUri);
             }
 
-        
             public void SetHeaders()
             {
                 _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -32,7 +28,4 @@ namespace TFLStatusLibrary
             }
          
     }
-          
-   
-    
 }

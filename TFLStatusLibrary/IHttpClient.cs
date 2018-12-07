@@ -11,8 +11,6 @@ namespace TFLStatusLibrary
     {
         Task<HttpResponseMessage> GetAsync(string requestUri);
         void SetHeaders();
-
-      //  HttpRequestHeaders DefaultRequestHeaders { get; }
     }
 
 }

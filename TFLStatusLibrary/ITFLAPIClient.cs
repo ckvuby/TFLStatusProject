@@ -6,13 +6,9 @@ namespace TFLStatusLibrary
 {
     public interface ITFLAPIClient
     {
-        List<LineInformation> SetupAndMakeApiCallAndReturnFormattedData();
+        IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData();
         List<TflApiResponseInformation> MapResponseStringToObject(string responseString);
-        List<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation);
-
-        LineInformation setLineInfo(LineInformation formattedLine, TflApiResponseInformation line, string statusDescription, string statusReason);
-
-       
+        IEnumerable<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation);
         Task<HttpResponseMessage> MakeTFLApiCall();
         Task<string> ConvertResponseToString(HttpResponseMessage response);
     }
