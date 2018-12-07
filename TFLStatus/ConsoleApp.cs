@@ -41,7 +41,7 @@ namespace TFLStatus
 
             foreach (LineInformation lines in tflStatusData)
             {
-                Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus);
+                Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus + "  " + lines.statusReason);
             }
         }
     }

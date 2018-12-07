@@ -8,9 +8,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary", "TFLStatusLibrary\TFLStatusLibrary.csproj", "{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppTests", "ConsoleAppTests\ConsoleAppTests.csproj", "{5145025F-B520-44D0-90F1-489F773C648E}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary", "TFLStatusLibrary\TFLStatusLibrary.csproj", "{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLStatusLibrary.Tests", "TFLStatusLibrary.Tests\TFLStatusLibrary.Tests.csproj", "{A4D64FB1-EB61-406A-9423-ECFC8EE2D663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary.Tests", "TFLStatusLibrary.Tests\TFLStatusLibrary.Tests.csproj", "{A4D64FB1-EB61-406A-9423-ECFC8EE2D663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -88,7 +88,7 @@ namespace ConsoleAppTests
                 // Act
                 consoleApp.ShowStatusOfAllTubeLines(options, httpClient, httpClientWrapper);
                 sw.Close();
-                string expected = string.Format("Victoria ------ Good Service{0}Bakerloo ------ Good Service{0}Circle ------ Good Service{0}", Environment.NewLine);
+                string expected = string.Format("Victoria ------ Good Service  {0}Bakerloo ------ Good Service  {0}Circle ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert
                 Assert.Equal(expected, sw.ToString());
