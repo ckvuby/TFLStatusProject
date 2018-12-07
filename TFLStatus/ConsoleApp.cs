@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
 using CommandLine;
+using TFLStatusLibrary;
 
 
 namespace TFLStatus
 {
     public class ConsoleApp : IConsoleApp
     {
-        public IMockApiClass ApiClass;
+        public ITFLAPIClient apiClass;
 
-        public ConsoleApp()
+        public ConsoleApp(ITFLAPIClient apiClass)
         {
+            this.apiClass = apiClass;
         }
-        static void Main(string[] args)
+
+        public void ConsoleAppHandler(string[] args, HttpClient httpClient, IHttpClient httpClientWrapper)
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
                     if (o.AllTubeLineStatus)
                     {
-                        var consoleApp = new ConsoleApp();
-                        consoleApp.ShowStatusOfAllTubeLines(o);
-                    }else
+                        ShowStatusOfAllTubeLines(o, httpClient, httpClientWrapper);
+                    }
+                    else
                     {
                         Console.WriteLine("Sorry no valid parameter");
                     }
@@ -31,14 +35,13 @@ namespace TFLStatus
             Console.ReadLine();
         }
 
-        public void ShowStatusOfAllTubeLines(Options options)
+        public void ShowStatusOfAllTubeLines(Options options, HttpClient httpClient, IHttpClient httpClientWrapper)
         {
-            ApiClass = new MockApiClass();
-            var tflStatusData = ApiClass.GetDataFromApi();
+            var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
 
-            foreach (Hashtable lines in tflStatusData)
+            foreach (LineInformation lines in tflStatusData)
             {
-                Console.WriteLine(lines["LineName"] + " ------ " + lines["LineStatus"]);
+                Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus);
             }
         }
     }
