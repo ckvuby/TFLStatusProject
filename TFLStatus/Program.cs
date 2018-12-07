@@ -15,7 +15,19 @@ namespace TFLStatus
             IHttpClient httpclient = new HttpClientWrapper(httpClient);
             TFLApiClient tflApiClient = new TFLApiClient(httpclient);
             var lines = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
-            lines.ForEach(line => Console.WriteLine(line.lineId + "--" + line.lineName + "--" + line.lineStatus + "___" + "---" + line.statusReason));
+            //var lineEnumerator = lines.GetEnumerator();
+            using (var sequenceEnum = lines.GetEnumerator())
+            {
+                while (sequenceEnum.MoveNext())
+                {
+                    Console.WriteLine(sequenceEnum.Current.lineId + "--" + sequenceEnum.Current.lineName + "--" + sequenceEnum.Current.lineStatus + "---" + sequenceEnum.Current.statusReason);
+                  //  Console.WriteLine(sequenceEnum.Current.lineName);
+                    //Console.WriteLine(sequenceEnum.Current.lineStatus);
+                    //Console.WriteLine(sequenceEnum.Current.linestatusReason);
+                }
+            }
+            //lineEnumerator.Current()
+            //l(line => Console.WriteLine(line.lineId + "--" + line.lineName + "--" + line.lineStatus + "___" + "---" + line.statusReason));
 
         }
         static void Main(string[] args)

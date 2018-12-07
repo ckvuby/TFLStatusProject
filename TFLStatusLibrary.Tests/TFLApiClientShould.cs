@@ -80,7 +80,10 @@ namespace TFLStatusLibrary.Tests
 
              TFLApiClient tflClient = new TFLApiClient(httpClient.Object);
              tflClient.SetupAndMakeApiCallAndReturnFormattedData();
-
+                /*
+                Exception ex = await Assert.ThrowsAsync<Exception>(() => tflClient.MakeTFLApiCall());
+                Console.WriteLine(ex.Message);
+                Assert.Equal("Sorry there was an error", ex.Message);*/
              string expected = string.Format("Sorry there was an error{0}", Environment.NewLine);
              Assert.Equal(expected, sw.ToString());
             }
