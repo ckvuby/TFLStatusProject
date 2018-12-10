@@ -11,10 +11,12 @@ namespace TFLStatus
     public class ConsoleApp : IConsoleApp
     {
         public ITFLAPIClient apiClass;
+        private ISteve _Steve;
 
-        public ConsoleApp(ITFLAPIClient apiClass)
+        public ConsoleApp(ITFLAPIClient apiClass, ISteve steve)
         {
             this.apiClass = apiClass;
+            this._Steve = steve;
         }
 
         public void ConsoleAppHandler(string[] args, HttpClient httpClient, IHttpClient httpClientWrapper)
@@ -24,7 +26,7 @@ namespace TFLStatus
                 {
                     if (o.AllTubeLineStatus)
                     {
-                        ShowStatusOfAllTubeLines(o, httpClient, httpClientWrapper);
+                        _Steve.ShowStatusOfAllTubeLines(o, httpClient, httpClientWrapper);
                     }
                     else
                     {
@@ -35,9 +37,27 @@ namespace TFLStatus
             Console.ReadLine();
         }
 
+        
+    }
+
+    public interface ISteve
+    {
+        void ShowStatusOfAllTubeLines(Options options, HttpClient httpClient, IHttpClient httpClientWrapper);
+    }
+
+    public class Steve : ISteve
+    {
+        private readonly ITFLAPIClient _tflapiClient;
+
+        public Steve(ITFLAPIClient tflapiClient)
+        {
+            _tflapiClient = tflapiClient;
+
+        }
+
         public void ShowStatusOfAllTubeLines(Options options, HttpClient httpClient, IHttpClient httpClientWrapper)
         {
-            var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            var tflStatusData = _tflapiClient.SetupAndMakeApiCallAndReturnFormattedData();
 
             foreach (LineInformation lines in tflStatusData)
             {

@@ -20,7 +20,7 @@ namespace TFLStatus
             HttpClient = new HttpClient();
             httpClientWrapper = new HttpClientWrapper(HttpClient);
             apiClass = new TFLApiClient(httpClientWrapper);
-            ConsoleApp = new ConsoleApp(apiClass);
+            ConsoleApp = new ConsoleApp(apiClass, new Steve(apiClass));
         }
 
         static void Main(string[] args)
