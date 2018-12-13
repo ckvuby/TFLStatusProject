@@ -35,3 +35,70 @@ body {
         display: none;
     }
 }
+
+#bakerloo {
+    background-color: #b26300;
+}
+
+#central {
+    background-color: #dc241f;
+}
+
+#circle {
+    background-color: #ffd329;
+}
+
+#district {
+    background-color: #007d32;
+}
+
+#hammersmith-city {
+    background-color: #f4a9be;
+}
+
+#jubilee {
+    background-color: #a1a5a7;
+}
+
+#metropolitan {
+    background-color: #9b0058;
+}
+
+#northern {
+    background-color: #000000;
+}
+
+#piccadilly {
+    background-color: #0019a8;
+}
+
+#victoria {
+    background-color: #0098d8;
+}
+
+#waterloo-city {
+    background-color: #93ceba;
+}
+
+.line-info-container {
+    color: white;
+    font-size: 26px;
+    font-family: Arial;
+}
+
+.lineinfo {
+    width: 70%;
+    overflow: hidden;
+    padding: 12px;
+    margin: 3px;
+}
+
+.lineName {
+    width: 50%;
+    float: left;
+}
+
+.lineStatus {
+    width: 50%;
+    float: left;
+}

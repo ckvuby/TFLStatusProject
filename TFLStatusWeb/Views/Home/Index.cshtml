@@ -4,12 +4,15 @@
 }
 
 <div>
-    <div>The Banging Bum</div>
-    @foreach (LineInformation item in @Model)
-    {
-        <div>@item.lineName</div>
-        <div>@item.lineStatus</div>
-        <div>@item.statusReason</div>
+    <div class="line-info-container">
+        @foreach (LineInformation item in @Model)
+        {
+            <div id="@item.lineId" class="lineinfo">
+                <div class="lineName">@item.lineName</div>
+                <div class="lineStatus">@item.lineStatus</div>
+                <div class="statusReason">@item.statusReason</div>
+            </div>
 
-    }
+        }
+    </div>
 </div>
