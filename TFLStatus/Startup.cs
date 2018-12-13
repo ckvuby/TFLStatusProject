@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
-using Castle.Core.Configuration;
-using CommandLine;
+using Microsoft.Extensions.Configuration;
 using TFLStatusLibrary;
 
 namespace TFLStatus
@@ -17,10 +15,10 @@ namespace TFLStatus
         public Uri url;
 
 
-        Startup()
+        Startup(AppConfig thing)
         {
-            url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
-         
+            url = thing.WebApiBaseUrl;
+
             HttpClient = new HttpClient();
             httpClientWrapper = new HttpClientWrapper(HttpClient);
             apiClass = new TFLApiClient(httpClientWrapper, url);
@@ -29,7 +27,18 @@ namespace TFLStatus
 
         static void Main(string[] args)
         {
-            var startup = new Startup();
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+            var thing = new AppConfig();
+            configuration.GetSection("MySettings").Bind(thing);
+
+            //string Url = configuration["WebApiBaseUrl"];
+            //Console.WriteLine(thing.WebApiBaseUrl);
+
+            var startup = new Startup(thing);
             ConsoleApp.ConsoleAppHandler(args, HttpClient, httpClientWrapper);
         }
     }
