@@ -26,6 +26,7 @@ namespace TFLStatusWeb.Controllers
         public IActionResult Index()
         {
             var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
+            HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
             return View(lineInformationData);
         }
 
