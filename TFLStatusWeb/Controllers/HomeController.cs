@@ -7,19 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
-using TFLStatusWeb.Utility;
+
 
 namespace TFLStatusWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IOptions<MySettingsModel> appSettings;
+
         private readonly ITFLAPIClient tflApiClient;
 
-        public HomeController(IOptions<MySettingsModel> app, ITFLAPIClient tflapiClient)
+        public HomeController(ITFLAPIClient tflapiClient)
         {
-            appSettings = app;
-            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+            
             tflApiClient = tflapiClient;
         }
 
