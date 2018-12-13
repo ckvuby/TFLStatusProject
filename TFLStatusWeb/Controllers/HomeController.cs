@@ -4,15 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using TFLStatusLibrary;
 using TFLStatusWeb.Models;
+using TFLStatusWeb.Utility;
 
 namespace TFLStatusWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IOptions<MySettingsModel> appSettings;
+        private readonly ITFLAPIClient tflApiClient;
+
+        public HomeController(IOptions<MySettingsModel> app, ITFLAPIClient tflapiClient)
+        {
+            appSettings = app;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+            tflApiClient = tflapiClient;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
+            return View(lineInformationData);
         }
 
         public IActionResult About()
