@@ -9,7 +9,7 @@ namespace TFLStatusLibrary
 {
     public interface IHttpClient
     {
-        Task<HttpResponseMessage> GetAsync(string requestUri);
+        Task<HttpResponseMessage> GetAsync(Uri requestUri);
         void SetHeaders();
     }
 

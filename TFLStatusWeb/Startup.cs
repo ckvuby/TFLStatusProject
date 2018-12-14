@@ -10,16 +10,28 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
+
+using System;
+using System.Configuration;
+using Microsoft.IdentityModel.Protocols;
 
 namespace TFLStatusWeb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+       
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                Configuration = builder.Build();
+            
+
         }
 
         public IConfiguration Configuration { get; }
@@ -36,9 +48,12 @@ namespace TFLStatusWeb
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.Configure<MySettingsModel>(Configuration.GetSection("MySettings"));
+
+            var url = new MySettingsModel();
+            Configuration.GetSection("MySettings").Bind(url);
             services.AddScoped<IHttpClient>(s => new HttpClientWrapper(new HttpClient()));
-            services.AddScoped<ITFLAPIClient, TFLApiClient>();
+            services.AddScoped<ITFLAPIClient, TFLApiClient>(s => new TFLApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

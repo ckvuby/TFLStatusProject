@@ -13,13 +13,21 @@ namespace TFLStatusLibrary
     public class TFLApiClient : ITFLAPIClient
     {
         private readonly IHttpClient _httpClient;
+        private Uri TflApiUrl { get; set; }
 
-        public TFLApiClient(IHttpClient httpClient)
+        public TFLApiClient(IHttpClient httpClient,Uri ApiUrl)
         {
+           
+            if(ApiUrl == null)
+            {
+                throw new ArgumentNullException("url not valid");
+            }
+
+            TflApiUrl = ApiUrl;
             _httpClient = httpClient;
         }
 
-        private string apiRequestUrl = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
+        //private string apiRequestUrl = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
 
         public IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData()
         {
@@ -71,7 +79,7 @@ namespace TFLStatusLibrary
 
         public async Task<HttpResponseMessage> MakeTFLApiCall()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync(apiRequestUrl);
+            HttpResponseMessage response = await _httpClient.GetAsync(TflApiUrl);
             return response;
         }
 
