@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppTests", "ConsoleA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary.Tests", "TFLStatusLibrary.Tests\TFLStatusLibrary.Tests.csproj", "{A4D64FB1-EB61-406A-9423-ECFC8EE2D663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLStatusWeb", "TFLStatusWeb\TFLStatusWeb.csproj", "{6186B669-FA12-4D3A-95F9-DB8B77D5185A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusWeb", "TFLStatusWeb\TFLStatusWeb.csproj", "{6186B669-FA12-4D3A-95F9-DB8B77D5185A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLWebController.Tests", "TFLWebController.Tests\TFLWebController.Tests.csproj", "{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{6186B669-FA12-4D3A-95F9-DB8B77D5185A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6186B669-FA12-4D3A-95F9-DB8B77D5185A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6186B669-FA12-4D3A-95F9-DB8B77D5185A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
