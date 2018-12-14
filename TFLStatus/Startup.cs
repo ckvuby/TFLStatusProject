@@ -32,13 +32,10 @@ namespace TFLStatus
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
-            var thing = new AppConfig();
-            configuration.GetSection("MySettings").Bind(thing);
+            var appConfig = new AppConfig();
+            configuration.GetSection("MySettings").Bind(appConfig);
 
-            //string Url = configuration["WebApiBaseUrl"];
-            //Console.WriteLine(thing.WebApiBaseUrl);
-
-            var startup = new Startup(thing);
+            var startup = new Startup(appConfig);
             ConsoleApp.ConsoleAppHandler(args, HttpClient, httpClientWrapper);
         }
     }
