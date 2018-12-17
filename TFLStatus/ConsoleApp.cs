@@ -24,6 +24,10 @@ namespace TFLStatus
                     {
                         ShowStatusOfAllTubeLines();
                     }
+                    else if (o.VictoriaTubeLineStatus)
+                    {
+                        ShowStatusOfVictoriaLine();
+                    }
                     else
                     {
                         Console.WriteLine("Sorry no valid parameter");
@@ -40,6 +44,19 @@ namespace TFLStatus
             foreach (LineInformation lines in tflStatusData)
             {
                 Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus + "  " + lines.statusReason);
+            }
+        }
+
+        public void ShowStatusOfVictoriaLine()
+        {
+            var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+
+            foreach (LineInformation lines in tflStatusData)
+            {
+                if (lines.lineId == "victoria")
+                {
+                    Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus + "  " + lines.statusReason);
+                }
             }
         }
     }
