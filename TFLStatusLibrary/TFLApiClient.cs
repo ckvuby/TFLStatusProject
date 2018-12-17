@@ -1,9 +1,6 @@
-﻿using Moq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,8 +23,6 @@ namespace TFLStatusLibrary
             TflApiUrl = ApiUrl;
             _httpClient = httpClient;
         }
-
-        //private string apiRequestUrl = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
 
         public IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData()
         {
@@ -74,8 +69,6 @@ namespace TFLStatusLibrary
             
             return formattedLineInformation;
         }
-
-       
 
         public async Task<HttpResponseMessage> MakeTFLApiCall()
         {

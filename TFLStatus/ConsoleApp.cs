@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Http;
 using CommandLine;
 using TFLStatusLibrary;
@@ -24,7 +22,7 @@ namespace TFLStatus
                 {
                     if (o.AllTubeLineStatus)
                     {
-                        ShowStatusOfAllTubeLines(o, httpClient, httpClientWrapper);
+                        ShowStatusOfAllTubeLines();
                     }
                     else
                     {
@@ -35,7 +33,7 @@ namespace TFLStatus
             Console.ReadLine();
         }
 
-        public void ShowStatusOfAllTubeLines(Options options, HttpClient httpClient, IHttpClient httpClientWrapper)
+        public void ShowStatusOfAllTubeLines()
         {
             var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
 

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace TFLStatusLibrary
 {
-   
     public class TflApiResponseInformation
     {
         public string id { get; set; }
