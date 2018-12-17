@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using FluentAssertions;
 
 namespace TFLStatusLibrary.Tests
 {
@@ -75,12 +76,13 @@ namespace TFLStatusLibrary.Tests
             TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
           var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
 
-          // Assert the passed json resolves to expected line information
+       
           Assert.Equal(expectedLineInformation[0].lineId, response[0].lineId);
             Assert.Equal(expectedLineInformation[0].lineName, response[0].lineName);
             Assert.Equal(expectedLineInformation[0].lineStatus, response[0].lineStatus);
             Assert.Equal(expectedLineInformation[0].statusReason, response[0].statusReason);
-           
+        
+          
             //Assert.Equal(expectedLineInformation, response.ToList());
 
         }
