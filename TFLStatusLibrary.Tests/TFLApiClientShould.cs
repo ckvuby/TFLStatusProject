@@ -1,17 +1,12 @@
 using Moq;
-using Moq.Protected;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
-using FluentAssertions;
 
 namespace TFLStatusLibrary.Tests
 {
@@ -21,17 +16,22 @@ namespace TFLStatusLibrary.Tests
         [Fact]
         public async void MakeACallToApi()
         {
+            // Arrange
             var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-          
             TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
+
+            // Act
             await tflClient.MakeTFLApiCall();
+
+            // Assert
             httpClient.Verify(x => x.GetAsync(url), Times.Once());
         }
 
         [Fact]
         public async Task ReturnHTTPMessageResponseAsync()
         {
+            // Arrange
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
             var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
@@ -42,8 +42,11 @@ namespace TFLStatusLibrary.Tests
             httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
 
             TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
+
+            // Act
             var response2 = tflClient.MakeTFLApiCall();
 
+            // Assert
             Assert.Equal(responseMessage, response2.Result);
 
         }
@@ -51,6 +54,7 @@ namespace TFLStatusLibrary.Tests
         [Fact]
         public async Task ReturnHTTPMessageResponseAsyncWithContent()
         {
+            // Arrange
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
             var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
@@ -60,31 +64,29 @@ namespace TFLStatusLibrary.Tests
             };
 
             httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
-
-
+            
             var expectedLineInformation = new List<LineInformation>
-         {
-             new LineInformation
-             {
-                 lineId = "bakerloo",
-                 lineName = "Bakerloo",
-                 lineStatus = "Good Service",
-                 statusReason = null
-             }
-         };
+                {
+                    new LineInformation
+                        {
+                         lineId = "bakerloo",
+                         lineName = "Bakerloo",
+                         lineStatus = "Good Service",
+                         statusReason = null
+                         }
+                };
 
             TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
-          var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
 
-       
-          Assert.Equal(expectedLineInformation[0].lineId, response[0].lineId);
+            // Act
+            var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
+
+            // Assert
+            Assert.Equal(expectedLineInformation[0].lineId, response[0].lineId);
             Assert.Equal(expectedLineInformation[0].lineName, response[0].lineName);
             Assert.Equal(expectedLineInformation[0].lineStatus, response[0].lineStatus);
             Assert.Equal(expectedLineInformation[0].statusReason, response[0].statusReason);
         
-          
-            //Assert.Equal(expectedLineInformation, response.ToList());
-
         }
 
 
@@ -93,8 +95,8 @@ namespace TFLStatusLibrary.Tests
       {
           using (StringWriter sw = new StringWriter())
           {
+              // Arrange
               Console.SetOut(sw);
-
               Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
               var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
 
@@ -104,12 +106,14 @@ namespace TFLStatusLibrary.Tests
 
               TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
 
+              // Act
               var responseObject = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
 
               string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
+
+              // Assert
               Assert.Null(responseObject);
               Assert.Equal(expected, sw.ToString());
-
               sw.Flush();
           }
 
@@ -118,16 +122,19 @@ namespace TFLStatusLibrary.Tests
       [Fact]
       public void ThrowAnExceptionWhenNoResponseFromAPI()
       {
-
-          Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
+            // Arrange
+            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
             var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
 
             httpClient.Setup(x => x.GetAsync(It.IsAny<Uri>())).Throws(new Exception("Sorry there was an error"));
 
-          TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
-          Exception ex = Assert.Throws<AggregateException>(() => tflClient.MakeTFLApiCall().Result);
+            TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
 
-          Assert.Equal("Sorry there was an error", ex.InnerException.Message);
+            //Act
+            Exception ex = Assert.Throws<AggregateException>(() => tflClient.MakeTFLApiCall().Result);
+
+            // Assert
+            Assert.Equal("Sorry there was an error", ex.InnerException.Message);
       }
   }
 }

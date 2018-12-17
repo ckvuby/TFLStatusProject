@@ -44,7 +44,7 @@ namespace ConsoleAppTests
             var httpClientWrapper = new HttpClientWrapper(httpClient);
 
             // Act
-            consoleApp.ShowStatusOfAllTubeLines(options, httpClient, httpClientWrapper);
+            consoleApp.ShowStatusOfAllTubeLines();
 
             // Assert
             mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
@@ -86,7 +86,7 @@ namespace ConsoleAppTests
                 Console.SetOut(sw);
 
                 // Act
-                consoleApp.ShowStatusOfAllTubeLines(options, httpClient, httpClientWrapper);
+                consoleApp.ShowStatusOfAllTubeLines();
                 sw.Close();
                 string expected = string.Format("Victoria ------ Good Service  {0}Bakerloo ------ Good Service  {0}Circle ------ Good Service  {0}", Environment.NewLine);
 

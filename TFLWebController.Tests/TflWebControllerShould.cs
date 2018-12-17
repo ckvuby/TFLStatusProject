@@ -11,22 +11,27 @@ namespace TFLWebController.Tests
     public class TflWebControllerShould
     {
         [Fact]
-        public void TReturn_IndexView_With_TubeLines_ListWithServiceStatus()
+        public void Return_IndexView_With_TubeLinesListWithServiceStatus()
         {
+            //Arrange
             var tflApiClient = new Mock<ITFLAPIClient>();
             var expectedLineInformation = new List<LineInformation>
-         {
-             new LineInformation
-             {
-                 lineId = "bakerloo",
-                 lineName = "Bakerloo",
-                 lineStatus = "Good Service",
-                 statusReason = null
-             }
-         };
+                {
+                    new LineInformation
+                        {
+                         lineId = "bakerloo",
+                         lineName = "Bakerloo",
+                         lineStatus = "Good Service",
+                         statusReason = null
+                        }
+                };
             tflApiClient.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(expectedLineInformation);
             HomeController homeController = new HomeController(tflApiClient.Object);
+
+            //Act
             IActionResult result = homeController.Index();
+
+            //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.NotNull(result);
             var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(viewResult.ViewData.Model);
