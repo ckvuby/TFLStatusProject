@@ -6,5 +6,8 @@ namespace TFLStatus
     {
         [Option('a', "all")]
         public bool AllTubeLineStatus { get; set; }
+
+        [Option("victoria")]
+        public bool VictoriaLineStatus { get; set; }
     }
 }

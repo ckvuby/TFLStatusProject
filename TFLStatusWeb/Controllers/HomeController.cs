@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
@@ -17,11 +19,28 @@ namespace TFLStatusWeb.Controllers
             tflApiClient = tflapiClient;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
+        {
+            var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
+            //HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
+           
+            return View(lineInformationData);
+        }
+
+        public IActionResult All()
         {
             var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
             //HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
             return View(lineInformationData);
+        }
+
+        [HttpPost]
+        public IActionResult Line(FormCollection values)
+        {
+            var linename = values["TubeLines"].ToString();
+            return RedirectToAction("All");
+
+
         }
 
         public IActionResult About()

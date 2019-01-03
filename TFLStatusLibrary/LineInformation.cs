@@ -9,6 +9,4 @@ namespace TFLStatusLibrary
         public string lineStatus { get; set;  }
         public string statusReason { get; set; }
     }
-
-
 }

@@ -24,6 +24,10 @@ namespace TFLStatus
                     {
                         ShowStatusOfAllTubeLines();
                     }
+                    else if (o.VictoriaLineStatus)
+                    {
+                        Console.WriteLine(o.VictoriaLineStatus);
+                    }
                     else
                     {
                         Console.WriteLine("Sorry no valid parameter");

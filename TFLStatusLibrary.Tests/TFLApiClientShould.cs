@@ -17,7 +17,8 @@ namespace TFLStatusLibrary.Tests
         public async void MakeACallToApi()
         {
             // Arrange
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            //var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            var url = new Uri("https://fakeurl.co.uk");
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
             TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
 
@@ -33,7 +34,8 @@ namespace TFLStatusLibrary.Tests
         {
             // Arrange
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+          //  var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            var url = new Uri("https://fakeurl.co.uk");
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("This is the response message")
@@ -56,7 +58,8 @@ namespace TFLStatusLibrary.Tests
         {
             // Arrange
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+           // var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            var url = new Uri("https://fakeurl.co.uk");
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
               // Content = new StringContent("[{\"$type\":\"Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities\",\"id\":\"circle\",\"name\":\"Circle\",\"modeName\":\"tube\",\"disruptions\":[],\"created\":\"2018-11-28T11:37:03.677Z\",\"modified\":\"2018-11-28T11:37:03.677Z\",\"lineStatuses\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities\",\"id\":0,\"lineId\":\"circle\",\"statusSeverity\":9,\"statusSeverityDescription\":\"Minor Delays\",\"reason\":\"Circle Line: MINOR DELAYS due to emergency work in the Euston Square area. \",\"created\":\"0001-01-01T00:00:00\",\"validityPeriods\":[{\"$type\":\"Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities\",\"fromDate\":\"2018-12-07T11:01:48Z\",\"toDate\":\"2018-12-08T01:29:00Z\",\"isNow\":true}],\"disruption\":{\"$type\":\"Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities\",\"category\":\"RealTime\",\"categoryDescription\":\"RealTime\",\"description\":\"Circle Line: MINOR DELAYS due to emergency work in the Euston Square area. \",\"affectedRoutes\":[{\"$type\":\"Tfl.Api.Presentation.Entities.RouteSection, Tfl.Api.Presentation.Entities\",\"id\":\"1633\",\"name\":\"Edgware Road (Circle Line) Underground Station - Hammersmith (H&C Line) Underground Station\",\"direction\":\"inbound\",\"originationName\":\"Edgware Road (Circle Line) Underground Station\",\"destinationName\":\"Hammersmith (H&C Line) Underground Station\",\"routeSectionNaptanEntrySequence\":[]}]")
@@ -98,9 +101,10 @@ namespace TFLStatusLibrary.Tests
               // Arrange
               Console.SetOut(sw);
               Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-              var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+             // var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+                var url = new Uri("https://fakeurl.co.uk");
 
-              Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
+                Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
 
               httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage.Object));
 
@@ -124,7 +128,8 @@ namespace TFLStatusLibrary.Tests
       {
             // Arrange
             Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+           // var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+            var url = new Uri("https://fakeurl.co.uk");
 
             httpClient.Setup(x => x.GetAsync(It.IsAny<Uri>())).Throws(new Exception("Sorry there was an error"));
 

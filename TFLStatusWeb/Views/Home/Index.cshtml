@@ -2,12 +2,33 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
 <div>
+    <p>
+        <a asp-action="All">All Lines</a>
+    </p>
+    <p>
+
+
+
+        @using (Html.BeginForm("Line", "Home", new { TubeLines = "" }, FormMethod.Post, true, null))
+        {
+            <select id="TubeLines" name="TubeLines">
+                @foreach (var item in @Model)
+                {
+                    <option value="@item.lineName">@item.lineName</option>
+                }
+            </select>
+
+            <input type="submit" value="Send" />
+
+        }
+            
+    </p>
+
     <div class="line-info-container">
         @foreach (LineInformation item in @Model)
         {
-            <div id="@item.lineId" class="lineinfo">
+            <div id="@item.lineId" name="tubeLine" class="lineinfo">
                 <div class="lineName">@item.lineName</div>
                 <div class="lineStatus">@item.lineStatus</div>
                 <div class="statusReason">@item.statusReason</div>
@@ -15,4 +36,7 @@
 
         }
     </div>
+
+
+
 </div>
