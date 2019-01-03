@@ -15,9 +15,9 @@ namespace TFLStatus
         public Uri url;
 
 
-        Startup(AppConfig thing)
+        Startup(Uri thing)
         {
-            url = thing.WebApiBaseUrl;
+            url =  thing;
 
             HttpClient = new HttpClient();
             httpClientWrapper = new HttpClientWrapper(HttpClient);
@@ -32,8 +32,7 @@ namespace TFLStatus
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
-            var appConfig = new AppConfig();
-            configuration.GetSection("MySettings").Bind(appConfig);
+              Uri appConfig = new Uri(configuration.GetSection("MySettings").GetSection("WebApiBaseUrl").Value);
 
             var startup = new Startup(appConfig);
             ConsoleApp.ConsoleAppHandler(args, HttpClient, httpClientWrapper);

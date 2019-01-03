@@ -15,13 +15,16 @@ namespace TFLStatusWeb.Controllers
         {
             
             tflApiClient = tflapiClient;
+           
+
         }
 
         public IActionResult Index()
         {
+
             var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
-            //HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
             return View(lineInformationData);
+
         }
 
         public IActionResult About()
