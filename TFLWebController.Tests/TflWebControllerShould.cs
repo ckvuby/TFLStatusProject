@@ -32,12 +32,12 @@ namespace TFLWebController.Tests
                 HomeController homeController = new HomeController(tflApiClient.Object);
 
                 //Act             
-                IActionResult result = homeController.Index();
+                ViewResult result = homeController.Index();
 
                 //Assert
                 var viewResult = Assert.IsType<ViewResult>(result);
                 Assert.NotNull(result);
-                var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(result.ViewData.Model);
                 Assert.Equal(expectedLineInformation[0].lineId, model.ElementAt(0).lineId);
             
         }
