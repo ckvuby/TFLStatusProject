@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using Moq;
 using TFLStatus;
 using TFLStatusLibrary;
@@ -29,20 +27,15 @@ namespace ConsoleAppTests
             lineInfoCircle.lineName = "Circle";
             lineInfoCircle.lineStatus = "Good Service";
 
-
             List<LineInformation> mockDataOfApi = new List<LineInformation>();
             mockDataOfApi.Add(lineInfoVictoria);
             mockDataOfApi.Add(lineInfoBakerloo);
             mockDataOfApi.Add(lineInfoCircle);
 
-
             Mock<ITFLAPIClient> mockOfApi = new Mock<ITFLAPIClient>();
             mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
             var consoleApp = new ConsoleApp(mockOfApi.Object);
-            var options = new Options();
-            var httpClient = new HttpClient();
-            var httpClientWrapper = new HttpClientWrapper(httpClient);
-
+           
             // Act
             consoleApp.ShowStatusOfAllTubeLines();
 
@@ -69,20 +62,14 @@ namespace ConsoleAppTests
                 lineInfoCircle.lineName = "Circle";
                 lineInfoCircle.lineStatus = "Good Service";
 
-
                 List<LineInformation> mockDataOfApi = new List<LineInformation>();
                 mockDataOfApi.Add(lineInfoVictoria);
                 mockDataOfApi.Add(lineInfoBakerloo);
                 mockDataOfApi.Add(lineInfoCircle);
 
-
                 Mock<ITFLAPIClient> mockOfApi = new Mock<ITFLAPIClient>();
                 mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
-                var consoleApp = new ConsoleApp(mockOfApi.Object);
-                var options = new Options();
-                var httpClient = new HttpClient();
-                var httpClientWrapper = new HttpClientWrapper(httpClient);
-
+                var consoleApp = new ConsoleApp(mockOfApi.Object);    
                 Console.SetOut(sw);
 
                 // Act

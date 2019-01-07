@@ -15,32 +15,16 @@ namespace TFLStatusWeb.Controllers
         {
             
             tflApiClient = tflapiClient;
+           
+
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
+
             var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
-            //HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
             return View(lineInformationData);
-        }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

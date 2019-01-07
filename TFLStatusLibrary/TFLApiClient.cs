@@ -14,13 +14,7 @@ namespace TFLStatusLibrary
 
         public TFLApiClient(IHttpClient httpClient,Uri ApiUrl)
         {
-           
-            if(ApiUrl == null)
-            {
-                throw new ArgumentNullException("url not valid");
-            }
-
-            TflApiUrl = ApiUrl;
+            TflApiUrl = ApiUrl ?? throw new ArgumentNullException("url not valid");
             _httpClient = httpClient;
         }
 
@@ -30,10 +24,10 @@ namespace TFLStatusLibrary
             _httpClient.SetHeaders();
             try
             {
-                var response = MakeTFLApiCall().Result;
+                var response = MakeTFLApiCallAsync().Result;
                 if (response.IsSuccessStatusCode) 
                 {
-                    var responseString = ConvertResponseToString(response).Result;
+                    var responseString = ConvertResponseToStringAsync(response).Result;
                     var TflApiResponseInformation = MapResponseStringToObject(responseString);
                     formattedLineInfo = CreateListOfFormattedLineInformation(TflApiResponseInformation);
                 }
@@ -47,6 +41,19 @@ namespace TFLStatusLibrary
                 Console.WriteLine("Sorry there was an error");
             }
             return formattedLineInfo;
+        }
+
+        public async Task<HttpResponseMessage> MakeTFLApiCallAsync()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(TflApiUrl);
+            return response;
+        }
+
+        public async Task<string> ConvertResponseToStringAsync(HttpResponseMessage response)
+        {
+            var jsonString = "";
+            jsonString = await response.Content.ReadAsStringAsync();
+            return jsonString;
         }
 
         public List<TflApiResponseInformation> MapResponseStringToObject(string responseString)
@@ -70,18 +77,9 @@ namespace TFLStatusLibrary
             return formattedLineInformation;
         }
 
-        public async Task<HttpResponseMessage> MakeTFLApiCall()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync(TflApiUrl);
-            return response;
-        }
 
-        public async Task<string> ConvertResponseToString(HttpResponseMessage response)
-        {
-            var jsonString = "";
-            jsonString = await response.Content.ReadAsStringAsync();
-            return jsonString;
-        }
+
+        
 
     }
 }

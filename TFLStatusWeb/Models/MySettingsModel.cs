@@ -7,6 +7,6 @@ namespace TFLStatusWeb.Models
 {
     public class MySettingsModel
     {
-        public string WebApiBaseUrl { get; set; }
+        public String WebApiBaseUrl { get; set; }
     }
 }
