@@ -5,8 +5,10 @@ namespace TFLStatus
 {
     public interface IConsoleApp
     {
-        void ConsoleAppHandler(string[] args, HttpClient httpClient, IHttpClient httpClientWrapper);
+        void ConsoleAppHandler(string[] args);
 
         void ShowStatusOfAllTubeLines();
+
+        void ShowStatusOfVictoriaLine();
     }
 }

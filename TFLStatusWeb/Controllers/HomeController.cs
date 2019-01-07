@@ -9,38 +9,19 @@ namespace TFLStatusWeb.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ITFLAPIClient tflApiClient;
+        private readonly ITFLAPIClient _tflapiClient;
 
         public HomeController(ITFLAPIClient tflapiClient)
-        {
-            
-            tflApiClient = tflapiClient;
+        {   
+            _tflapiClient = tflapiClient;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
-            //HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
+
+            var lineInformationData = _tflapiClient.SetupAndMakeApiCallAndReturnFormattedData();
             return View(lineInformationData);
-        }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

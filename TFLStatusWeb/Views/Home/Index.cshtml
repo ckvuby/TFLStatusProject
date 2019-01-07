@@ -2,15 +2,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<head>
+    <title></title>
+    <meta http-equiv="refresh" content="5" />
+</head>
 <div>
     <div class="line-info-container">
         @foreach (LineInformation item in @Model)
         {
-            <div id="@item.lineId" class="lineinfo">
-                <div class="lineName">@item.lineName</div>
-                <div class="lineStatus">@item.lineStatus</div>
-                <div class="statusReason">@item.statusReason</div>
+            <div id="@item.LineId" class="lineinfo">
+                <div class="lineName">@item.LineName</div>
+                <div class="lineStatus">@item.LineStatus</div>
+                <div class="statusReason">@item.StatusReason</div>
             </div>
 
         }

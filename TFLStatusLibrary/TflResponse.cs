@@ -3,14 +3,14 @@ namespace TFLStatusLibrary
 {
     public class TflApiResponseInformation
     {
-        public string id { get; set; }
-        public string name { get; set; }
-        public LineStatus[] lineStatuses { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public LineStatus[] LineStatuses { get; set; }
     }
 
     public class LineStatus
     {
-        public string statusSeverityDescription { get; set; }
-        public string reason { get; set; }
+        public string StatusSeverityDescription { get; set; }
+        public string Reason { get; set; }
     }
 }
