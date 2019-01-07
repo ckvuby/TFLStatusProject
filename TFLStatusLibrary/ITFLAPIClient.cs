@@ -9,7 +9,7 @@ namespace TFLStatusLibrary
         IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData();
         List<TflApiResponseInformation> MapResponseStringToObject(string responseString);
         IEnumerable<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation);
-        Task<HttpResponseMessage> MakeTFLApiCall();
-        Task<string> ConvertResponseToString(HttpResponseMessage response);
+        Task<HttpResponseMessage> MakeTFLApiCallAsync();
+        Task<string> ConvertResponseToStringAsync(HttpResponseMessage response);
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
 
-using System;
+
 using System.Configuration;
 using Microsoft.IdentityModel.Protocols;
 
