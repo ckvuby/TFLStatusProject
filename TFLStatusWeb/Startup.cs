@@ -9,6 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
 
+<<<<<<< HEAD
+=======
+
+using System.Configuration;
+using Microsoft.IdentityModel.Protocols;
+
+>>>>>>> origin/refactoring-2
 namespace TFLStatusWeb
 {
     public class Startup
@@ -43,8 +50,9 @@ namespace TFLStatusWeb
             var url = new MySettingsModel();
             Configuration.GetSection("MySettings").Bind(url);
             services.AddScoped<IHttpClient>(s => new HttpClientWrapper(new HttpClient()));
-            services.AddScoped<ITFLAPIClient, TFLApiClient>(s => new TFLApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
-            
+            services.AddScoped<ITFLAPIClient>(s => new TFLApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

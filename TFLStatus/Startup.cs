@@ -8,22 +8,29 @@ namespace TFLStatus
 {
     class Startup
     {
-        public static ITFLAPIClient apiClass;
+        public static ITFLAPIClient tflApiClient;
         public static HttpClient HttpClient;
         public static ConsoleApp ConsoleApp;
         public static IHttpClient httpClientWrapper;
         public Uri url;
 
+<<<<<<< HEAD
 
         Startup(Uri thing)
         {
             url =  thing;
 
+=======
+        Startup(AppConfig appConfig)
+        {
+            url = appConfig.WebApiBaseUrl;
+>>>>>>> origin/refactoring-2
             HttpClient = new HttpClient();
             httpClientWrapper = new HttpClientWrapper(HttpClient);
-            apiClass = new TFLApiClient(httpClientWrapper, url);
-            ConsoleApp = new ConsoleApp(apiClass);
+            tflApiClient = new TFLApiClient(httpClientWrapper, url);
+            ConsoleApp = new ConsoleApp(tflApiClient);
         }
+
 
         static void Main(string[] args)
         {
