@@ -14,17 +14,10 @@ namespace TFLStatus
         public static IHttpClient httpClientWrapper;
         public Uri url;
 
-<<<<<<< HEAD
 
-        Startup(Uri thing)
+        Startup(Uri appConfig)
         {
-            url =  thing;
-
-=======
-        Startup(AppConfig appConfig)
-        {
-            url = appConfig.WebApiBaseUrl;
->>>>>>> origin/refactoring-2
+            url = appConfig;
             HttpClient = new HttpClient();
             httpClientWrapper = new HttpClientWrapper(HttpClient);
             tflApiClient = new TFLApiClient(httpClientWrapper, url);

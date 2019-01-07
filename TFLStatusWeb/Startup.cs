@@ -9,13 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TFLStatusLibrary;
 using TFLStatusWeb.Models;
 
-<<<<<<< HEAD
-=======
-
-using System.Configuration;
-using Microsoft.IdentityModel.Protocols;
-
->>>>>>> origin/refactoring-2
 namespace TFLStatusWeb
 {
     public class Startup
