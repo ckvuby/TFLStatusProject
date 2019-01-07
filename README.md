@@ -15,7 +15,7 @@ It accesses Transport For London’s API to get the status of all tube lines and
  
 ### Class Library
  
-At its base, the project has a class library that provides the methods through which it can access TFL’s Api. It returns a JSON file containing all tube line information, deconstructs that file and maps it to an object of relevant information. It is this object that the class library passes to either the Command Line App or the Web App.
+At its base, the project has a class library that provides the methods through which it can access TFL’s Api. It returns a JSON file containing all tube line information and maps it to an object of relevant information. It is this object that the class library passes to either the Command Line App or the Web App.
 
 ### Key Design Choices
 1.	Use of HttpClient- We use this library to make our requests to the API. It provides us with all the necessary functionality and online documentation was extensive. Although more expansive libraries are available chose to implement our own interfaces and wrappers, as opposed to being given them out of the box.
