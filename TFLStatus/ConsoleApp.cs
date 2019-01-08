@@ -59,17 +59,5 @@ namespace TFLStatusConsoleApp
             }
         }
 
-        public void ShowStatusOfVictoriaLine()
-        {
-            var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
-
-            foreach (LineInformation lines in tflStatusData)
-            {
-                if (lines.lineId == "victoria")
-                {
-                    Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus + "  " + lines.statusReason);
-                }
-            }
-        }
     }
 }
