@@ -24,4 +24,3 @@ At its base, the project has a class library that provides the methods through w
 
 ![screenshot](./Images/TFLWebPage.png)
 
-https://www.dropbox.com/s/0czb33aova14ic6/TFLWebPage.png?dl=0
