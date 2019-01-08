@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CommandLine;
 using TFLStatus;
 using TFLStatusLibrary;
@@ -43,7 +44,8 @@ namespace TFLStatusConsoleApp
         public void ShowStatusOfAllTubeLines()
         {
             // TODO: Naming, function name indicates SRP broken
-            // TODO: Naming, data is ambiuous, its a list of lines so should probably include lines in its name
+            // TODO: Naming, data is ambiuous, its a list of lines so should probably
+            // include lines in its name
             var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
 
             // TODO: Use VAR rather than type
@@ -52,13 +54,14 @@ namespace TFLStatusConsoleApp
                 Console.WriteLine(lines.LineName + " ------ " + lines.LineStatus + "  " + lines.StatusReason);
             }
         }
-
+        
         // TODO: Exception handling
         // TODO: Suspicious, we're retrieving ALL lines then only showing 1, cannot we filter beforehand?
         public void ShowStatusOfVictoriaLine()
         {
             var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
 
+            
             foreach (LineInformation lines in tflStatusData)
             {
                 if (lines.LineName == "Victoria")

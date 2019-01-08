@@ -12,12 +12,13 @@ namespace TFLStatusLibrary
         private readonly IHttpClient _httpClient;
 
         // TODO: Inconsistent naming
+        // TODO: should be readonly
         private Uri TflApiUrl { get; set; }
 
         public TflApiClient(IHttpClient httpClient,Uri apiUrl)
         {
             // TODO: Untested code
-            TflApiUrl = apiUrl ?? throw new ArgumentNullException("url not valid");
+            TflApiUrl = apiUrl ?? throw new ArgumentNullException(nameof(apiUrl));
             _httpClient = httpClient;
         }
 
