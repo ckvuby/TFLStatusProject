@@ -36,9 +36,10 @@ namespace TFLStatusWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            // TODO: Settle on a version of .netcore, this project no longer builds
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // TODO: Naming
             var url = new MySettingsModel();
             Configuration.GetSection("MySettings").Bind(url);
             services.AddScoped<IHttpClient>(s => new HttpClientWrapper(new HttpClient()));

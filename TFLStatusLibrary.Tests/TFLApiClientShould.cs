@@ -23,6 +23,7 @@ namespace TFLStatusLibrary.Tests
             tflClient = new TflApiClient(httpClient.Object, url);
         }
 
+        // TODO: What is this testing?
         [Fact]
         public async void MakeACallToApi()
         {
@@ -59,6 +60,7 @@ namespace TFLStatusLibrary.Tests
 
         }
 
+        // TODO: Naming, what does this do? It doesnt return content and doesnt use the async function
         [Fact]
         public void ReturnHttpMessageResponseAsyncWithContent()
         {
@@ -86,6 +88,7 @@ namespace TFLStatusLibrary.Tests
             // Act
             var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
 
+            // TODO: Use fluentassertions instead of the individual properties
             // Assert
             Assert.Equal(expectedLineInformation[0].LineId, response[0].LineId);
             Assert.Equal(expectedLineInformation[0].LineName, response[0].LineName);
@@ -94,7 +97,7 @@ namespace TFLStatusLibrary.Tests
         
         }
 
-
+        // TODO: Shouldnt use console, should throw
         [Fact]
       public void WriteErrorMessageToConsoleIfBadStatusCode()
       {
@@ -120,6 +123,7 @@ namespace TFLStatusLibrary.Tests
 
       }
 
+        //TODO: Verify what this is testing, the httpclient object is already tested and you have no logic running here
       [Fact]
       public void ThrowAnExceptionWhenNoResponseFromApi()
       {
@@ -131,6 +135,7 @@ namespace TFLStatusLibrary.Tests
             Exception ex = Assert.Throws<AggregateException>(() => tflClient.MakeTFLApiCallAsync().Result);
 
             // Assert
+          // TODO: Should not assert error text unless the text is important
             Assert.Equal("Sorry there was an error", ex.InnerException.Message);
       }
   }

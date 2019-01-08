@@ -3,6 +3,9 @@ using TFLStatusLibrary;
 
 namespace TFLStatus
 {
+    /// <summary>
+    ///  TODO: Unused
+    /// </summary>
     public interface IConsoleApp
     {
         void ConsoleAppHandler(string[] args);

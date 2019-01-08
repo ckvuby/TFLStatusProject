@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TFLStatusLibrary
 {
+    /// <summary>
+    /// TODO: Best practice is that your interfaces are in a separate namespace to the implementation
+    /// </summary>
         public class HttpClientWrapper : IHttpClient
         {
             private readonly HttpClient _httpClient;
@@ -21,6 +24,10 @@ namespace TFLStatusLibrary
                 return _httpClient.GetAsync(requestUri);
             }
 
+            /// <summary>
+            /// TODO: Why is this public?
+            /// TODO: Ensure _httpClient is set before execution (watch out for nulls)
+            /// </summary>
             public void SetHeaders()
             {
                 _httpClient.DefaultRequestHeaders.Accept.Clear();

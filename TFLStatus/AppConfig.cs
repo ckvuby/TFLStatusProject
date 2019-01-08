@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TFLStatus
 {
+    // TODO: Unused
     public class AppConfig
     {
         public Uri WebApiBaseUrl { get; set; }

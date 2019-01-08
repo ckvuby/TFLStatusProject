@@ -9,12 +9,17 @@ using Xunit;
 
 namespace ConsoleAppTests
 {
+    // TODO: Naming convention - should vs check
     public class ConsoleAppShould : IDisposable
     {
+        // TODO: Bad style, module variables are suspicious
         private readonly Mock<ITFLAPIClient> mockOfApi;
         private readonly List<LineInformation> mockDataOfApi;
+
+        // TODO: Definitely bad, stringwrite is disposable which means it holds on to resources
         private readonly StringWriter sw;
 
+        // TODO: SRP broken
         public ConsoleAppShould()
         {
             sw = new StringWriter();
@@ -77,7 +82,9 @@ namespace ConsoleAppTests
             mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
         }
         
-
+        /// <summary>
+        /// TODO: Assertion not mentioned in test name
+        /// </summary>
         [Fact]
         public void DisplayTheStatusOfAllTubeLines()
         {
@@ -97,6 +104,7 @@ namespace ConsoleAppTests
 
         }
 
+        // TODO: Test assertion verifies the name of the service, the dots and the status but this isnt mentioned in the name
         [Fact]
         public void DisplayTheStatusOfVictoriaLine()
         {

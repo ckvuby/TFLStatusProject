@@ -12,6 +12,8 @@ namespace TFLStatus
 
         public static ITFLAPIClient TflApiClient;
 
+        // TODO: Why static?
+        // TODO: Why module level variables?
         public static HttpClient HttpClient;
         public static ConsoleApp ConsoleApp;
         public static IHttpClient HttpClientWrapper;
@@ -30,6 +32,7 @@ namespace TFLStatus
         }
 
 
+        // TODO: SRP broken, config loaded, and uri fetched and console app initialised
         static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
