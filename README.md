@@ -1,6 +1,6 @@
 # TFL Status Project
 
-This project is a solution to the TFL Status project described here: https://wiki.regn.net/wiki/UK_Development_Teams/Makers_Graduate_Projects
+The idea is to use .net core to create a service that fetches the TFL line status and displays it on-screen.
 
 It accesses Transport For London’s API to get the status of all tube lines and displays them to the user. The solution comprises of both a console app and a web app.
 
@@ -13,6 +13,10 @@ It accesses Transport For London’s API to get the status of all tube lines and
 
  Navigate to: TFLStatusProject  TFLStatusWeb and run dotnet run from the command line
  
+ Sample screenshot of the Web App:
+ 
+ ![screenshot](./Images/TFLWebPage.png)
+ 
 ### Class Library
  
 At its base, the project has a class library that provides the methods through which it can access TFL’s Api. It returns a JSON file containing all tube line information and maps it to an object of relevant information. It is this object that the class library passes to either the Command Line App or the Web App.
@@ -22,5 +26,4 @@ At its base, the project has a class library that provides the methods through w
 2.	Use of interfaces and wrappers- We make extensive use of interfaces and wrappers throughout the program to ensure that we could fully test our methods and ensure proper dependency injection.
 3.	Use of IoC Container- This allowed us to introduce all required class instances at start up, the program would then use these as required. This reduced repetition and helped to ensure proper dependency of injection.
 
-![screenshot](./Images/TFLWebPage.png)
 
