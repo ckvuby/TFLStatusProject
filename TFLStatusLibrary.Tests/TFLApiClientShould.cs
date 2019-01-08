@@ -12,15 +12,15 @@ namespace TFLStatusLibrary.Tests
 {
     public class TFLApiClientShould
     {
-        private readonly Mock<IHttpClient> httpClient;
-        private readonly ITFLAPIClient tflClient;
-        private readonly Uri url;
+        private readonly Mock<IHttpClient> _httpClient;
+        private readonly ITFLAPIClient _tflClient;
+        private readonly Uri _url;
 
         public TFLApiClientShould()
         {
-            url = new Uri("https://www.thisisfake.com");
-            httpClient = new Mock<IHttpClient>();
-            tflClient = new TflApiClient(httpClient.Object, url);
+            _url = new Uri("https://www.thisisfake.com");
+            _httpClient = new Mock<IHttpClient>();
+            _tflClient = new TflApiClient(_httpClient.Object, _url);
         }
 
         [Fact]
@@ -31,10 +31,10 @@ namespace TFLStatusLibrary.Tests
            
 
             // Act
-            await tflClient.MakeTFLApiCallAsync();
+            await _tflClient.MakeTFLApiCallAsync();
 
             // Assert
-            httpClient.Verify(x => x.GetAsync(url), Times.Once());
+            _httpClient.Verify(x => x.GetAsync(_url), Times.Once());
         }
 
         [Fact]
@@ -48,10 +48,10 @@ namespace TFLStatusLibrary.Tests
             };
 
 
-            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult(expected));
+            _httpClient.Setup(x => x.GetAsync(_url)).Returns(Task.FromResult(expected));
 
             // Act
-            var actual = await tflClient.MakeTFLApiCallAsync();
+            var actual = await _tflClient.MakeTFLApiCallAsync();
 
 
             // Assert
@@ -69,7 +69,7 @@ namespace TFLStatusLibrary.Tests
                Content = new StringContent("[{\"$type\":\"Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities\",\"id\":\"bakerloo\",\"name\":\"Bakerloo\",\"modeName\":\"tube\",\"disruptions\":[],\"created\":\"2018-11-28T11:37:03.687Z\",\"modified\":\"2018-11-28T11:37:03.687Z\",\"lineStatuses\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities\",\"id\":0,\"statusSeverity\":10,\"statusSeverityDescription\":\"Good Service\",\"created\":\"0001-01-01T00:00:00\",\"validityPeriods\":[]}],\"routeSections\":[],\"serviceTypes\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities\",\"name\":\"Regular\",\"uri\":\"/Line/Route?ids=Bakerloo&serviceTypes=Regular\"}],\"crowding\":{\"$type\":\"Tfl.Api.Presentation.Entities.Crowding, Tfl.Api.Presentation.Entities\"}}]")
             };
 
-            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult(responseMessage));
+            _httpClient.Setup(x => x.GetAsync(_url)).Returns(Task.FromResult(responseMessage));
             
             var expectedLineInformation = new List<LineInformation>
                 {
@@ -84,7 +84,7 @@ namespace TFLStatusLibrary.Tests
 
           
             // Act
-            var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
+            var response = _tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
 
             // Assert
             Assert.Equal(expectedLineInformation[0].LineId, response[0].LineId);
@@ -105,10 +105,10 @@ namespace TFLStatusLibrary.Tests
 
               Mock<HttpResponseMessage> expectedMock = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
 
-              httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(expectedMock.Object));
+              _httpClient.Setup(x => x.GetAsync(_url)).Returns(Task.FromResult<HttpResponseMessage>(expectedMock.Object));
  
               // Act
-              var actual = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
+              var actual = _tflClient.SetupAndMakeApiCallAndReturnFormattedData();
 
               string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
 
@@ -125,10 +125,10 @@ namespace TFLStatusLibrary.Tests
       {
             // Arrange
          
-            httpClient.Setup(x => x.GetAsync(It.IsAny<Uri>())).Throws(new Exception("Sorry there was an error"));
+            _httpClient.Setup(x => x.GetAsync(It.IsAny<Uri>())).Throws(new Exception("Sorry there was an error"));
 
             //Act
-            Exception ex = Assert.Throws<AggregateException>(() => tflClient.MakeTFLApiCallAsync().Result);
+            Exception ex = Assert.Throws<AggregateException>(() => _tflClient.MakeTFLApiCallAsync().Result);
 
             // Assert
             Assert.Equal("Sorry there was an error", ex.InnerException.Message);

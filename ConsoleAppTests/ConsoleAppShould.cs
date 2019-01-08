@@ -11,14 +11,14 @@ namespace ConsoleAppTests
 {
     public class ConsoleAppShould : IDisposable
     {
-        private readonly Mock<ITFLAPIClient> mockOfApi;
-        private readonly List<LineInformation> mockDataOfApi;
-        private readonly StringWriter sw;
+        private readonly Mock<ITFLAPIClient> _mockOfApi;
+        private readonly List<LineInformation> _mockDataOfApi;
+        private readonly StringWriter _sw;
 
         public ConsoleAppShould()
         {
-            sw = new StringWriter();
-            Console.SetOut(sw);
+            _sw = new StringWriter();
+            Console.SetOut(_sw);
             LineInformation lineInfoVictoria = new LineInformation();
             LineInformation lineInfoBakerloo = new LineInformation();
             LineInformation lineInfoCircle = new LineInformation();
@@ -33,18 +33,18 @@ namespace ConsoleAppTests
             lineInfoCircle.LineStatus = "Good Service";
 
 
-             mockDataOfApi = new List<LineInformation>
+             _mockDataOfApi = new List<LineInformation>
             {
                 lineInfoVictoria, lineInfoBakerloo, lineInfoCircle
             };
 
-             mockOfApi = new Mock<ITFLAPIClient>();
+             _mockOfApi = new Mock<ITFLAPIClient>();
 
         }
 
         public void Dispose()
         {
-            sw.Dispose();
+            _sw.Dispose();
         }
 
         [Fact]
@@ -53,28 +53,28 @@ namespace ConsoleAppTests
             // Arrange
            
 
-            mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
-            var consoleApp = new ConsoleApp(mockOfApi.Object);
+            _mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(_mockDataOfApi);
+            var consoleApp = new ConsoleApp(_mockOfApi.Object);
            
             // Act
             consoleApp.ShowStatusOfAllTubeLines();
 
             // Assert
-            mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
+            _mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
         }
 
         
         [Fact]
         public void CheckCallIsMadeToClientApiForVictoriaLine()
         {
-            mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
-            var consoleApp = new ConsoleApp(mockOfApi.Object);
+            _mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(_mockDataOfApi);
+            var consoleApp = new ConsoleApp(_mockOfApi.Object);
 
             //Act
             consoleApp.ShowStatusOfVictoriaLine();
 
             //Assert
-            mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
+            _mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
         }
         
 
@@ -83,15 +83,15 @@ namespace ConsoleAppTests
         {
 
                 // Arrange        
-                mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
-                var consoleApp = new ConsoleApp(mockOfApi.Object);    
+                _mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(_mockDataOfApi);
+                var consoleApp = new ConsoleApp(_mockOfApi.Object);    
                 
                 // Act
                 consoleApp.ShowStatusOfAllTubeLines();
                 string expected = string.Format("Victoria ------ Good Service  {0}Bakerloo ------ Good Service  {0}Circle ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert
-                Assert.Equal(expected, sw.ToString());
+                Assert.Equal(expected, _sw.ToString());
                 
             
 
@@ -102,15 +102,15 @@ namespace ConsoleAppTests
         {
           
                 // Arrange       
-                mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
-                var consoleApp = new ConsoleApp(mockOfApi.Object);
+                _mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(_mockDataOfApi);
+                var consoleApp = new ConsoleApp(_mockOfApi.Object);
 
                 // Act
                 consoleApp.ShowStatusOfVictoriaLine();
                 string expected = string.Format("Victoria ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert
-                Assert.Equal(expected, sw.ToString());
+                Assert.Equal(expected, _sw.ToString());
    
         }
 
