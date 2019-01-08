@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TFLStatus\TFLStatus.csproj" />
+    <ProjectReference Include="..\TFLStatus\TFLStatusConsoleApp.csproj" />
   </ItemGroup>
 
 </Project>

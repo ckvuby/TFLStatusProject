@@ -12,14 +12,23 @@ namespace TFLStatusLibrary.Tests
 {
     public class TFLApiClientShould
     {
+        private readonly Mock<IHttpClient> httpClient;
+        private readonly ITFLAPIClient tflClient;
+        private readonly Uri url;
+
+        public TFLApiClientShould()
+        {
+            url = new Uri("https://www.thisisfake.com");
+            httpClient = new Mock<IHttpClient>();
+            tflClient = new TflApiClient(httpClient.Object, url);
+        }
 
         [Fact]
         public async void MakeACallToApi()
         {
             // Arrange
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
-            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            ITFLAPIClient tflClient = new TFLApiClient(httpClient.Object, url);
+
+           
 
             // Act
             await tflClient.MakeTFLApiCallAsync();
@@ -29,91 +38,82 @@ namespace TFLStatusLibrary.Tests
         }
 
         [Fact]
-        public async Task ReturnHTTPMessageResponseAsync()
+        public async Task ReturnHttpMessageResponseAsync()
         {
             // Arrange
-            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
-            var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+           
+            var expected = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("This is the response message")
             };
 
-            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
 
-            ITFLAPIClient tflClient = new TFLApiClient(httpClient.Object, url);
-
+            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult(expected));
 
             // Act
-            var response2 = tflClient.MakeTFLApiCallAsync();
+            var actual = await tflClient.MakeTFLApiCallAsync();
+
 
             // Assert
-            Assert.Equal(responseMessage, response2.Result);
+            Assert.Equal(expected, actual);
 
         }
 
         [Fact]
-        public async Task ReturnHTTPMessageResponseAsyncWithContent()
+        public void ReturnHttpMessageResponseAsyncWithContent()
         {
             // Arrange
-            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
+           
             var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
-              // Content = new StringContent("[{\"$type\":\"Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities\",\"id\":\"circle\",\"name\":\"Circle\",\"modeName\":\"tube\",\"disruptions\":[],\"created\":\"2018-11-28T11:37:03.677Z\",\"modified\":\"2018-11-28T11:37:03.677Z\",\"lineStatuses\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities\",\"id\":0,\"lineId\":\"circle\",\"statusSeverity\":9,\"statusSeverityDescription\":\"Minor Delays\",\"reason\":\"Circle Line: MINOR DELAYS due to emergency work in the Euston Square area. \",\"created\":\"0001-01-01T00:00:00\",\"validityPeriods\":[{\"$type\":\"Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities\",\"fromDate\":\"2018-12-07T11:01:48Z\",\"toDate\":\"2018-12-08T01:29:00Z\",\"isNow\":true}],\"disruption\":{\"$type\":\"Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities\",\"category\":\"RealTime\",\"categoryDescription\":\"RealTime\",\"description\":\"Circle Line: MINOR DELAYS due to emergency work in the Euston Square area. \",\"affectedRoutes\":[{\"$type\":\"Tfl.Api.Presentation.Entities.RouteSection, Tfl.Api.Presentation.Entities\",\"id\":\"1633\",\"name\":\"Edgware Road (Circle Line) Underground Station - Hammersmith (H&C Line) Underground Station\",\"direction\":\"inbound\",\"originationName\":\"Edgware Road (Circle Line) Underground Station\",\"destinationName\":\"Hammersmith (H&C Line) Underground Station\",\"routeSectionNaptanEntrySequence\":[]}]")
                Content = new StringContent("[{\"$type\":\"Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities\",\"id\":\"bakerloo\",\"name\":\"Bakerloo\",\"modeName\":\"tube\",\"disruptions\":[],\"created\":\"2018-11-28T11:37:03.687Z\",\"modified\":\"2018-11-28T11:37:03.687Z\",\"lineStatuses\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities\",\"id\":0,\"statusSeverity\":10,\"statusSeverityDescription\":\"Good Service\",\"created\":\"0001-01-01T00:00:00\",\"validityPeriods\":[]}],\"routeSections\":[],\"serviceTypes\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities\",\"name\":\"Regular\",\"uri\":\"/Line/Route?ids=Bakerloo&serviceTypes=Regular\"}],\"crowding\":{\"$type\":\"Tfl.Api.Presentation.Entities.Crowding, Tfl.Api.Presentation.Entities\"}}]")
             };
 
-            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage));
+            httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult(responseMessage));
             
             var expectedLineInformation = new List<LineInformation>
                 {
                     new LineInformation
                         {
-                         lineId = "bakerloo",
-                         lineName = "Bakerloo",
-                         lineStatus = "Good Service",
-                         statusReason = null
+                         LineId = "bakerloo",
+                         LineName = "Bakerloo",
+                         LineStatus = "Good Service",
+                         StatusReason = null
                          }
                 };
 
-            TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
-
+          
             // Act
             var response = tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
 
             // Assert
-            Assert.Equal(expectedLineInformation[0].lineId, response[0].lineId);
-            Assert.Equal(expectedLineInformation[0].lineName, response[0].lineName);
-            Assert.Equal(expectedLineInformation[0].lineStatus, response[0].lineStatus);
-            Assert.Equal(expectedLineInformation[0].statusReason, response[0].statusReason);
+            Assert.Equal(expectedLineInformation[0].LineId, response[0].LineId);
+            Assert.Equal(expectedLineInformation[0].LineName, response[0].LineName);
+            Assert.Equal(expectedLineInformation[0].LineStatus, response[0].LineStatus);
+            Assert.Equal(expectedLineInformation[0].StatusReason, response[0].StatusReason);
         
         }
 
 
         [Fact]
-      public async Task WriteErrorMessageToConsoleIfBadStatusCode()
+      public void WriteErrorMessageToConsoleIfBadStatusCode()
       {
           using (StringWriter sw = new StringWriter())
           {
               // Arrange
               Console.SetOut(sw);
-              Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-              var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
 
-              Mock<HttpResponseMessage> responseMessage = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
+              Mock<HttpResponseMessage> expectedMock = new Mock<HttpResponseMessage>(HttpStatusCode.BadGateway);
 
-              httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(responseMessage.Object));
-
-              TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
-
+              httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult<HttpResponseMessage>(expectedMock.Object));
+ 
               // Act
-              var responseObject = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
+              var actual = tflClient.SetupAndMakeApiCallAndReturnFormattedData();
 
               string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
 
               // Assert
-              Assert.Null(responseObject);
+              Assert.Null(actual);
               Assert.Equal(expected, sw.ToString());
               sw.Flush();
           }
@@ -121,15 +121,11 @@ namespace TFLStatusLibrary.Tests
       }
 
       [Fact]
-      public void ThrowAnExceptionWhenNoResponseFromAPI()
+      public void ThrowAnExceptionWhenNoResponseFromApi()
       {
             // Arrange
-            Mock<IHttpClient> httpClient = new Mock<IHttpClient>();
-            var url = new Uri("https://api.tfl.gov.uk/line/mode/tube/status?detail=true");
-
+         
             httpClient.Setup(x => x.GetAsync(It.IsAny<Uri>())).Throws(new Exception("Sorry there was an error"));
-
-            TFLApiClient tflClient = new TFLApiClient(httpClient.Object, url);
 
             //Act
             Exception ex = Assert.Throws<AggregateException>(() => tflClient.MakeTFLApiCallAsync().Result);

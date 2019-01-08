@@ -3,36 +3,56 @@ using System.Collections.Generic;
 using System.IO;
 using Moq;
 using TFLStatus;
+using TFLStatusConsoleApp;
 using TFLStatusLibrary;
 using Xunit;
 
 namespace ConsoleAppTests
 {
-    public class ConsoleAppShould
+    public class ConsoleAppShould : IDisposable
     {
-        [Fact]
-        public void CheckCallIsMadeToClientApi()
+        private readonly Mock<ITFLAPIClient> mockOfApi;
+        private readonly List<LineInformation> mockDataOfApi;
+        private readonly StringWriter sw;
+
+        public ConsoleAppShould()
         {
-            // Arrange
+            sw = new StringWriter();
+            Console.SetOut(sw);
             LineInformation lineInfoVictoria = new LineInformation();
             LineInformation lineInfoBakerloo = new LineInformation();
             LineInformation lineInfoCircle = new LineInformation();
 
-            lineInfoVictoria.lineName = "Victoria";
-            lineInfoVictoria.lineStatus = "Good Service";
+            lineInfoVictoria.LineName = "Victoria";
+            lineInfoVictoria.LineStatus = "Good Service";
 
-            lineInfoBakerloo.lineName = "Bakerloo";
-            lineInfoBakerloo.lineStatus = "Good Service";
+            lineInfoBakerloo.LineName = "Bakerloo";
+            lineInfoBakerloo.LineStatus = "Good Service";
 
-            lineInfoCircle.lineName = "Circle";
-            lineInfoCircle.lineStatus = "Good Service";
+            lineInfoCircle.LineName = "Circle";
+            lineInfoCircle.LineStatus = "Good Service";
 
-            List<LineInformation> mockDataOfApi = new List<LineInformation>();
-            mockDataOfApi.Add(lineInfoVictoria);
-            mockDataOfApi.Add(lineInfoBakerloo);
-            mockDataOfApi.Add(lineInfoCircle);
 
-            Mock<ITFLAPIClient> mockOfApi = new Mock<ITFLAPIClient>();
+             mockDataOfApi = new List<LineInformation>
+            {
+                lineInfoVictoria, lineInfoBakerloo, lineInfoCircle
+            };
+
+             mockOfApi = new Mock<ITFLAPIClient>();
+
+        }
+
+        public void Dispose()
+        {
+            sw.Dispose();
+        }
+
+        [Fact]
+        public void CheckCallIsMadeToClientApi()
+        {
+            // Arrange
+           
+
             mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
             var consoleApp = new ConsoleApp(mockOfApi.Object);
            
@@ -43,46 +63,58 @@ namespace ConsoleAppTests
             mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
         }
 
+        
+        [Fact]
+        public void CheckCallIsMadeToClientApiForVictoriaLine()
+        {
+            mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
+            var consoleApp = new ConsoleApp(mockOfApi.Object);
+
+            //Act
+            consoleApp.ShowStatusOfVictoriaLine();
+
+            //Assert
+            mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
+        }
+        
+
         [Fact]
         public void DisplayTheStatusOfAllTubeLines()
         {
-            using (StringWriter sw = new StringWriter())
-            {
-                // Arrange
-                LineInformation lineInfoVictoria = new LineInformation();
-                LineInformation lineInfoBakerloo = new LineInformation();
-                LineInformation lineInfoCircle = new LineInformation();
 
-                lineInfoVictoria.lineName = "Victoria";
-                lineInfoVictoria.lineStatus = "Good Service";
-
-                lineInfoBakerloo.lineName = "Bakerloo";
-                lineInfoBakerloo.lineStatus = "Good Service";
-
-                lineInfoCircle.lineName = "Circle";
-                lineInfoCircle.lineStatus = "Good Service";
-
-                List<LineInformation> mockDataOfApi = new List<LineInformation>();
-                mockDataOfApi.Add(lineInfoVictoria);
-                mockDataOfApi.Add(lineInfoBakerloo);
-                mockDataOfApi.Add(lineInfoCircle);
-
-                Mock<ITFLAPIClient> mockOfApi = new Mock<ITFLAPIClient>();
+                // Arrange        
                 mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
                 var consoleApp = new ConsoleApp(mockOfApi.Object);    
-                Console.SetOut(sw);
-
+                
                 // Act
                 consoleApp.ShowStatusOfAllTubeLines();
-                sw.Close();
                 string expected = string.Format("Victoria ------ Good Service  {0}Bakerloo ------ Good Service  {0}Circle ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert
                 Assert.Equal(expected, sw.ToString());
-            }
+                
+            
 
         }
 
+        [Fact]
+        public void DisplayTheStatusOfVictoriaLine()
+        {
+          
+                // Arrange       
+                mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
+                var consoleApp = new ConsoleApp(mockOfApi.Object);
+
+                // Act
+                consoleApp.ShowStatusOfVictoriaLine();
+                string expected = string.Format("Victoria ------ Good Service  {0}", Environment.NewLine);
+
+                // Assert
+                Assert.Equal(expected, sw.ToString());
+   
+        }
+
+       
 
     }
 

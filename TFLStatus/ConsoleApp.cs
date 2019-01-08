@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Net.Http;
 using CommandLine;
+using TFLStatus;
 using TFLStatusLibrary;
 
-
-namespace TFLStatus
+namespace TFLStatusConsoleApp
 {
     public class ConsoleApp : IConsoleApp
     {
-        public ITFLAPIClient apiClass;
+        private readonly ITFLAPIClient _apiClass;
 
         public ConsoleApp(ITFLAPIClient apiClass)
         {
-            this.apiClass = apiClass;
+            this._apiClass = apiClass;
         }
 
-        public void ConsoleAppHandler(string[] args, HttpClient httpClient, IHttpClient httpClientWrapper)
+        public void ConsoleAppHandler(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
@@ -39,11 +38,24 @@ namespace TFLStatus
 
         public void ShowStatusOfAllTubeLines()
         {
-            var tflStatusData = apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
 
             foreach (LineInformation lines in tflStatusData)
             {
-                Console.WriteLine(lines.lineName + " ------ " + lines.lineStatus + "  " + lines.statusReason);
+                Console.WriteLine(lines.LineName + " ------ " + lines.LineStatus + "  " + lines.StatusReason);
+            }
+        }
+
+        public void ShowStatusOfVictoriaLine()
+        {
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+
+            foreach (LineInformation lines in tflStatusData)
+            {
+                if (lines.LineName == "Victoria")
+                {
+                    Console.WriteLine(lines.LineName + " ------ " + lines.LineStatus + "  " + lines.StatusReason);
+                }
             }
         }
 

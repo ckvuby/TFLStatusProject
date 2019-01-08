@@ -9,20 +9,17 @@ namespace TFLStatusWeb.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ITFLAPIClient tflApiClient;
+        private readonly ITFLAPIClient _tflapiClient;
 
         public HomeController(ITFLAPIClient tflapiClient)
-        {
-            
-            tflApiClient = tflapiClient;
-           
-
+        {   
+            _tflapiClient = tflapiClient;
         }
 
         public ViewResult Index()
         {
 
-            var lineInformationData = tflApiClient.SetupAndMakeApiCallAndReturnFormattedData();
+            var lineInformationData = _tflapiClient.SetupAndMakeApiCallAndReturnFormattedData();
             return View(lineInformationData);
 
         }

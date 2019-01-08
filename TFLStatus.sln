@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatus", "TFLStatus\TFLStatus.csproj", "{3D661977-2324-4C27-BA18-4FA56C81CC6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusConsoleApp", "TFLStatus\TFLStatusConsoleApp.csproj", "{3D661977-2324-4C27-BA18-4FA56C81CC6B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary", "TFLStatusLibrary\TFLStatusLibrary.csproj", "{DB2CB621-5E37-4CA4-BC62-7BCE13BE06EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppTests", "ConsoleAppTests\ConsoleAppTests.csproj", "{5145025F-B520-44D0-90F1-489F773C648E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusConsoleAppTests", "ConsoleAppTests\TFLStatusConsoleAppTests.csproj", "{5145025F-B520-44D0-90F1-489F773C648E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusLibrary.Tests", "TFLStatusLibrary.Tests\TFLStatusLibrary.Tests.csproj", "{A4D64FB1-EB61-406A-9423-ECFC8EE2D663}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLStatusWeb", "TFLStatusWeb\TFLStatusWeb.csproj", "{6186B669-FA12-4D3A-95F9-DB8B77D5185A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLWebController.Tests", "TFLWebController.Tests\TFLWebController.Tests.csproj", "{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFLWebController.Tests", "TFLWebController.Tests\TFLWebController.Tests.csproj", "{BC16D8E1-F4CF-4B60-BD72-A9B9F5E30C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

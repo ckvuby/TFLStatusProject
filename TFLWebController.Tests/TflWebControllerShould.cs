@@ -21,10 +21,10 @@ namespace TFLWebController.Tests
                 {
                     new LineInformation
                         {
-                         lineId = "bakerloo",
-                         lineName = "Bakerloo",
-                         lineStatus = "Good Service",
-                         statusReason = null
+                         LineId = "bakerloo",
+                         LineName = "Bakerloo",
+                         LineStatus = "Good Service",
+                         StatusReason = null
                         }
                 };
           
@@ -38,7 +38,8 @@ namespace TFLWebController.Tests
                 var viewResult = Assert.IsType<ViewResult>(result);
                 Assert.NotNull(result);
                 var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(result.ViewData.Model);
-                Assert.Equal(expectedLineInformation[0].lineId, model.ElementAt(0).lineId);
+                Assert.Equal(expectedLineInformation[0].LineId, model.ElementAt(0).LineId);
+
             
         }
     }

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace TFLStatusLibrary
 {
-    public class TFLApiClient : ITFLAPIClient
+    public class TflApiClient : ITFLAPIClient
     {
         private readonly IHttpClient _httpClient;
         private Uri TflApiUrl { get; set; }
 
-        public TFLApiClient(IHttpClient httpClient,Uri ApiUrl)
+        public TflApiClient(IHttpClient httpClient,Uri apiUrl)
         {
-            TflApiUrl = ApiUrl ?? throw new ArgumentNullException("url not valid");
+            TflApiUrl = apiUrl ?? throw new ArgumentNullException("url not valid");
             _httpClient = httpClient;
         }
 
@@ -28,8 +28,8 @@ namespace TFLStatusLibrary
                 if (response.IsSuccessStatusCode) 
                 {
                     var responseString = ConvertResponseToStringAsync(response).Result;
-                    var TflApiResponseInformation = MapResponseStringToObject(responseString);
-                    formattedLineInfo = CreateListOfFormattedLineInformation(TflApiResponseInformation);
+                    var tflApiResponseInformation = MapResponseStringToObject(responseString);
+                    formattedLineInfo = CreateListOfFormattedLineInformation(tflApiResponseInformation);
                 }
                 else
                 {
@@ -38,7 +38,7 @@ namespace TFLStatusLibrary
             }
             catch (Exception e)
             {
-                Console.WriteLine("Sorry there was an error");
+                Console.WriteLine(e + "Sorry there was an error");
             }
             return formattedLineInfo;
         }
@@ -49,37 +49,33 @@ namespace TFLStatusLibrary
             return response;
         }
 
-        public async Task<string> ConvertResponseToStringAsync(HttpResponseMessage response)
+        private async Task<string> ConvertResponseToStringAsync(HttpResponseMessage response)
         {
             var jsonString = "";
             jsonString = await response.Content.ReadAsStringAsync();
             return jsonString;
         }
 
-        public List<TflApiResponseInformation> MapResponseStringToObject(string responseString)
+        private List<TflApiResponseInformation> MapResponseStringToObject(string responseString)
         {
-            var TflApiResponseInformation  = JsonConvert.DeserializeObject<List<TflApiResponseInformation>>(responseString);
-            return TflApiResponseInformation;
+            var tflApiResponseInformation  = JsonConvert.DeserializeObject<List<TflApiResponseInformation>>(responseString);
+            return tflApiResponseInformation;
         }
 
-        public IEnumerable<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> TflApiResponseInformation)
+        private IEnumerable<LineInformation> CreateListOfFormattedLineInformation(List<TflApiResponseInformation> tflApiResponseInformation)
         {
           
-            var formattedLineInformation = TflApiResponseInformation.Select(line =>
+            var formattedLineInformation = tflApiResponseInformation.Select(line =>
                 new LineInformation()
                 {
-                    lineId = line.id,
-                    lineName = line.name,
-                    lineStatus = line.lineStatuses[0].statusSeverityDescription,
-                    statusReason = line.lineStatuses[0].reason
+                    LineId = line.Id,
+                    LineName = line.Name,
+                    LineStatus = line.LineStatuses[0].StatusSeverityDescription,
+                    StatusReason = line.LineStatuses[0].Reason
                 });
             
             return formattedLineInformation;
         }
-
-
-
-        
 
     }
 }

@@ -15,13 +15,12 @@ namespace TFLStatusWeb
     {
         public Startup(IHostingEnvironment env)
         {
-       
+
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
                 Configuration = builder.Build();
-            
 
         }
 
@@ -43,7 +42,7 @@ namespace TFLStatusWeb
             var url = new MySettingsModel();
             Configuration.GetSection("MySettings").Bind(url);
             services.AddScoped<IHttpClient>(s => new HttpClientWrapper(new HttpClient()));
-            services.AddScoped<ITFLAPIClient>(s => new TFLApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
+            services.AddScoped<ITFLAPIClient>(s => new TflApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
 
 
         }
