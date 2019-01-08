@@ -27,7 +27,9 @@ namespace TFLStatusLibrary.Tests
         public async void MakeACallToApi()
         {
             // Arrange
+
            
+
             // Act
             await tflClient.MakeTFLApiCallAsync();
 
@@ -45,10 +47,12 @@ namespace TFLStatusLibrary.Tests
                 Content = new StringContent("This is the response message")
             };
 
+
             httpClient.Setup(x => x.GetAsync(url)).Returns(Task.FromResult(expected));
 
             // Act
             var actual = await tflClient.MakeTFLApiCallAsync();
+
 
             // Assert
             Assert.Equal(expected, actual);

@@ -39,6 +39,7 @@ namespace TFLWebController.Tests
                 Assert.NotNull(result);
                 var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(result.ViewData.Model);
                 Assert.Equal(expectedLineInformation[0].LineId, model.ElementAt(0).LineId);
+
             
         }
     }

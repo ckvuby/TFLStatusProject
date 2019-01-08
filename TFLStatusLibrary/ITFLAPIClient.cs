@@ -8,5 +8,6 @@ namespace TFLStatusLibrary
     {
         IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData();
         Task<HttpResponseMessage> MakeTFLApiCallAsync();
+
     }
 }

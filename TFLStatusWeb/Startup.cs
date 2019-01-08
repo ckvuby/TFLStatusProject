@@ -44,6 +44,7 @@ namespace TFLStatusWeb
             services.AddScoped<IHttpClient>(s => new HttpClientWrapper(new HttpClient()));
             services.AddScoped<ITFLAPIClient>(s => new TflApiClient(s.GetService<IHttpClient>(), new Uri(url.WebApiBaseUrl)));
 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

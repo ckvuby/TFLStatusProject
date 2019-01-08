@@ -32,6 +32,7 @@ namespace ConsoleAppTests
             lineInfoCircle.LineName = "Circle";
             lineInfoCircle.LineStatus = "Good Service";
 
+
              mockDataOfApi = new List<LineInformation>
             {
                 lineInfoVictoria, lineInfoBakerloo, lineInfoCircle
@@ -51,6 +52,7 @@ namespace ConsoleAppTests
         {
             // Arrange
            
+
             mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
             var consoleApp = new ConsoleApp(mockOfApi.Object);
            
@@ -102,11 +104,9 @@ namespace ConsoleAppTests
                 // Arrange       
                 mockOfApi.Setup(x => x.SetupAndMakeApiCallAndReturnFormattedData()).Returns(mockDataOfApi);
                 var consoleApp = new ConsoleApp(mockOfApi.Object);
-               // Console.SetOut(sw);
 
                 // Act
                 consoleApp.ShowStatusOfVictoriaLine();
-                //sw.Close();
                 string expected = string.Format("Victoria ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert

@@ -9,7 +9,9 @@ namespace TFLStatus
 {
     class Startup
     {
+
         public static ITFLAPIClient TflApiClient;
+
         public static HttpClient HttpClient;
         public static ConsoleApp ConsoleApp;
         public static IHttpClient HttpClientWrapper;
@@ -18,12 +20,15 @@ namespace TFLStatus
 
         Startup(Uri appConfig)
         {
+
             Url = appConfig;
             HttpClient = new HttpClient();
             HttpClientWrapper = new HttpClientWrapper(HttpClient);
             TflApiClient = new TflApiClient(HttpClientWrapper, Url);
             ConsoleApp = new ConsoleApp(TflApiClient);
+
         }
+
 
         static void Main(string[] args)
         {
