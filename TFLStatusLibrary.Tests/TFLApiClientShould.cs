@@ -10,13 +10,13 @@ using Xunit;
 
 namespace TFLStatusLibrary.Tests
 {
-    public class TFLApiClientShould
+    public class TflApiClientShould
     {
         private readonly Mock<IHttpClient> _httpClient;
         private readonly ITFLAPIClient _tflClient;
         private readonly Uri _url;
 
-        public TFLApiClientShould()
+        public TflApiClientShould()
         {
             _url = new Uri("https://www.thisisfake.com");
             _httpClient = new Mock<IHttpClient>();
