@@ -35,7 +35,7 @@ namespace TFLWebController.Tests
                 ViewResult result = homeController.Index();
 
                 //Assert
-                var viewResult = Assert.IsType<ViewResult>(result);
+                Assert.IsType<ViewResult>(result);
                 Assert.NotNull(result);
                 var model = Assert.IsAssignableFrom<IEnumerable<LineInformation>>(result.ViewData.Model);
                 Assert.Equal(expectedLineInformation[0].LineId, model.ElementAt(0).LineId);
