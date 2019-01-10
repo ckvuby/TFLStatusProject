@@ -38,7 +38,7 @@ namespace TFLStatusConsoleApp
 
         public void ShowStatusOfAllTubeLines()
         {
-            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData().Result;
 
             foreach (LineInformation lines in tflStatusData)
             {
@@ -48,7 +48,7 @@ namespace TFLStatusConsoleApp
 
         public void ShowStatusOfVictoriaLine()
         {
-            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData().Result;
 
             foreach (LineInformation lines in tflStatusData)
             {

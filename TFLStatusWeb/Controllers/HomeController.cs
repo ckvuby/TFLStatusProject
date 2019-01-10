@@ -19,7 +19,7 @@ namespace TFLStatusWeb.Controllers
         public ViewResult Index()
         {
 
-            var lineInformationData = _tflapiClient.SetupAndMakeApiCallAndReturnFormattedData();
+            var lineInformationData = _tflapiClient.SetupAndMakeApiCallAndReturnFormattedData().Result;
             return View(lineInformationData);
 
         }
