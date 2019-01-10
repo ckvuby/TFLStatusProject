@@ -6,7 +6,7 @@ namespace TFLStatusLibrary
 {
     public interface ITFLAPIClient
     {
-        IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData();
+        Task<IEnumerable<LineInformation>> SetupAndMakeApiCallAndReturnFormattedDataAsync();
         Task<HttpResponseMessage> MakeTFLApiCallAsync();
 
     }

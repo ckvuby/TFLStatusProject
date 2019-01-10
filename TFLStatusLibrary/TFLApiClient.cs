@@ -18,13 +18,13 @@ namespace TFLStatusLibrary
             _httpClient = httpClient;
         }
 
-        public IEnumerable<LineInformation> SetupAndMakeApiCallAndReturnFormattedData()
+        public async Task<IEnumerable<LineInformation>> SetupAndMakeApiCallAndReturnFormattedDataAsync()
         {
             IEnumerable<LineInformation> formattedLineInfo = null;
             _httpClient.SetHeaders();
             try
             {
-                var response = MakeTFLApiCallAsync().Result;
+                var response =  await MakeTFLApiCallAsync();
                 if (response.IsSuccessStatusCode) 
                 {
                     var responseString = ConvertResponseToStringAsync(response).Result;

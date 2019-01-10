@@ -84,7 +84,7 @@ namespace TFLStatusLibrary.Tests
 
           
             // Act
-            var response = _tflClient.SetupAndMakeApiCallAndReturnFormattedData().ToList();
+            var response = _tflClient.SetupAndMakeApiCallAndReturnFormattedDataAsync().Result.ToList();
 
             // Assert
             Assert.Equal(expectedLineInformation[0].LineId, response[0].LineId);
@@ -108,7 +108,7 @@ namespace TFLStatusLibrary.Tests
               _httpClient.Setup(x => x.GetAsync(_url)).Returns(Task.FromResult<HttpResponseMessage>(expectedMock.Object));
  
               // Act
-              var actual = _tflClient.SetupAndMakeApiCallAndReturnFormattedData();
+              var actual = _tflClient.SetupAndMakeApiCallAndReturnFormattedDataAsync().Result;
 
               string expected = string.Format("Sorry information is not available{0}", Environment.NewLine);
 

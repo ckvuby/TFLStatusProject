@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Castle.Core.Internal;
 using CommandLine;
 using TFLStatus;
 using TFLStatusLibrary;
@@ -9,8 +12,13 @@ namespace TFLStatusConsoleApp
     {
         private readonly ITFLAPIClient _apiClass;
 
+        public IEnumerable<string> GetLine {
+            get;
+            set;
+        }
         public ConsoleApp(ITFLAPIClient apiClass)
         {
+            
             this._apiClass = apiClass;
         }
 
@@ -22,15 +30,13 @@ namespace TFLStatusConsoleApp
                     if (o.AllTubeLineStatus)
                     {
                         ShowStatusOfAllTubeLines();
+
                     }
-                    else if (o.VictoriaTubeLineStatus)
+                    else 
                     {
-                        ShowStatusOfVictoriaLine();
+                        ShowStatusOfAllTubeLines(o.GetLine);
                     }
-                    else
-                    {
-                        Console.WriteLine("Sorry no valid parameter");
-                    }
+
                 });
 
             Console.ReadLine();
@@ -38,14 +44,20 @@ namespace TFLStatusConsoleApp
 
         public void ShowStatusOfAllTubeLines()
         {
-            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            var emptyString = "";
+            ShowStatusOfAllTubeLines(emptyString);
+        }
 
-            foreach (LineInformation lines in tflStatusData)
+        public void ShowStatusOfAllTubeLines(string lineName)
+        {
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedDataAsync().Result;
+            
+            foreach (LineInformation lines in tflStatusData.Where(x=> x.LineName == lineName || x.LineName.IsNullOrEmpty()))
             {
                 Console.WriteLine(lines.LineName + " ------ " + lines.LineStatus + "  " + lines.StatusReason);
             }
         }
-
+        /*
         public void ShowStatusOfVictoriaLine()
         {
             var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
@@ -58,6 +70,6 @@ namespace TFLStatusConsoleApp
                 }
             }
         }
-
+        */
     }
 }
