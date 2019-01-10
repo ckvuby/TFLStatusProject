@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Castle.Core.Internal;
 using CommandLine;
 using TFLStatus;
 using TFLStatusLibrary;
@@ -21,11 +23,11 @@ namespace TFLStatusConsoleApp
                 {
                     if (o.AllTubeLineStatus)
                     {
-                        ShowStatusOfAllTubeLines();
+                        ShowStatutOfTubeLines();
                     }
-                    else if (o.VictoriaTubeLineStatus)
+                    else if (!String.IsNullOrEmpty(o.TubeLine))
                     {
-                        ShowStatusOfVictoriaLine();
+                        ShowStatutOfTubeLines(o.TubeLine);
                     }
                     else
                     {
@@ -36,6 +38,23 @@ namespace TFLStatusConsoleApp
             Console.ReadLine();
         }
 
+        public void ShowStatutOfTubeLines()
+        {
+            var emptyString = "";
+            ShowStatutOfTubeLines(emptyString);
+        }
+
+
+        public void ShowStatutOfTubeLines(String tubeName)
+        {
+            var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
+            foreach (LineInformation lines in tflStatusData.Where(x => x.LineName == tubeName || tubeName.IsNullOrEmpty()))
+            {
+                Console.WriteLine(lines.LineName + " ------ " + lines.LineStatus + "  " + lines.StatusReason);
+            }
+        }
+
+/*
         public void ShowStatusOfAllTubeLines()
         {
             var tflStatusData = _apiClass.SetupAndMakeApiCallAndReturnFormattedData();
@@ -58,6 +77,7 @@ namespace TFLStatusConsoleApp
                 }
             }
         }
+*/
 
     }
 }

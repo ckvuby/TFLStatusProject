@@ -9,26 +9,11 @@ namespace TFLStatus
 {
     class Startup
     {
-
         public static ITFLAPIClient TflApiClient;
-
         public static HttpClient HttpClient;
         public static ConsoleApp ConsoleApp;
         public static IHttpClient HttpClientWrapper;
-        public Uri Url;
-
-
-        Startup(Uri appConfig)
-        {
-
-            Url = appConfig;
-            HttpClient = new HttpClient();
-            HttpClientWrapper = new HttpClientWrapper(HttpClient);
-            TflApiClient = new TflApiClient(HttpClientWrapper, Url);
-            ConsoleApp = new ConsoleApp(TflApiClient);
-
-        }
-
+        private readonly Uri Url;
 
         static void Main(string[] args)
         {
@@ -37,10 +22,20 @@ namespace TFLStatus
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
-              Uri appConfig = new Uri(configuration.GetSection("MySettings").GetSection("WebApiBaseUrl").Value);
+              Uri appConfigUrl = new Uri(configuration.GetSection("MySettings").GetSection("WebApiBaseUrl").Value);
 
-            var startup = new Startup(appConfig);
+            //var startup = new Startup(appConfig);
+            CreateInstancesRequired(appConfigUrl);
             ConsoleApp.ConsoleAppHandler(args);
+        }
+
+        public static void CreateInstancesRequired(Uri AppConfigUrl)
+        {
+            var Url = AppConfigUrl;
+            HttpClient = new HttpClient();
+            HttpClientWrapper = new HttpClientWrapper(HttpClient);
+            TflApiClient = new TflApiClient(HttpClientWrapper, Url);
+            ConsoleApp = new ConsoleApp(TflApiClient);
         }
     }
 }

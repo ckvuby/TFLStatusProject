@@ -7,8 +7,10 @@ namespace TFLStatus
     {
         void ConsoleAppHandler(string[] args);
 
-        void ShowStatusOfAllTubeLines();
+        void ShowStatutOfTubeLines();
 
-        void ShowStatusOfVictoriaLine();
+/*        void ShowStatusOfAllTubeLines();
+
+        void ShowStatusOfVictoriaLine();*/
     }
 }

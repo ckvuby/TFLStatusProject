@@ -57,7 +57,7 @@ namespace ConsoleAppTests
             var consoleApp = new ConsoleApp(_mockOfApi.Object);
            
             // Act
-            consoleApp.ShowStatusOfAllTubeLines();
+            consoleApp.ShowStatutOfTubeLines();
 
             // Assert
             _mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
@@ -71,7 +71,7 @@ namespace ConsoleAppTests
             var consoleApp = new ConsoleApp(_mockOfApi.Object);
 
             //Act
-            consoleApp.ShowStatusOfVictoriaLine();
+            consoleApp.ShowStatutOfTubeLines();
 
             //Assert
             _mockOfApi.Verify(m => m.SetupAndMakeApiCallAndReturnFormattedData(), Times.Once());
@@ -87,7 +87,7 @@ namespace ConsoleAppTests
                 var consoleApp = new ConsoleApp(_mockOfApi.Object);    
                 
                 // Act
-                consoleApp.ShowStatusOfAllTubeLines();
+                consoleApp.ShowStatutOfTubeLines();
                 string expected = string.Format("Victoria ------ Good Service  {0}Bakerloo ------ Good Service  {0}Circle ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert
@@ -106,7 +106,7 @@ namespace ConsoleAppTests
                 var consoleApp = new ConsoleApp(_mockOfApi.Object);
 
                 // Act
-                consoleApp.ShowStatusOfVictoriaLine();
+                consoleApp.ShowStatutOfTubeLines("Victoria");
                 string expected = string.Format("Victoria ------ Good Service  {0}", Environment.NewLine);
 
                 // Assert

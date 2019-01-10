@@ -7,7 +7,7 @@ namespace TFLStatus
         [Option('a', "all")]
         public bool AllTubeLineStatus { get; set; }
 
-        [Option('v', "victoria")]
-        public bool VictoriaTubeLineStatus { get; set; }
+        [Option('l', "getLine")]
+        public string TubeLine { get; set; }
     }
 }
