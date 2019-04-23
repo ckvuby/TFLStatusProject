@@ -29,7 +29,7 @@ namespace TFLStatusConsoleApp
                     }
                     else
                     {
-                        Console.WriteLine("Sorry that is not an valid parameter");
+                        Console.WriteLine("Sorry that is not a valid parameter");
                     }
                 });
 
